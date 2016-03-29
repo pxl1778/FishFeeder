@@ -30,8 +30,30 @@ function init(){
              
         function update() {
             displayAll();
-            
-            //Removing circles from the array when they're not visible
+            manageCircles();
+            fish.update();
+            click();
+            prevMouse = new Phaser.Point(game.input.x, game.input.y);
+		}
+        
+        //method to display all of the objects
+        function displayAll(){
+            graphics.clear();
+            graphics.beginFill(0xAADDFF);
+            graphics.lineStyle(5, 0x000000, 1);
+            graphics.drawRect(0, 0, 800, 600);
+            for(var i=0; i<puddles.length; i++)
+            {
+                puddles[i].display();
+            }
+            for(var i=0; i<circles.length; i++)
+            {
+                circles[i].display();
+            }
+            fish.display();
+        }
+        
+        function manageCircles(){
             for(var i=0; i<circles.length; i++)
             {
                 if(circles[i].opacity < 0)
@@ -52,9 +74,9 @@ function init(){
             {
                 createPuddle();
             }
-            
-            fish.update();
-            //Clicking event
+        }
+        
+        function click(){
             if(game.input.activePointer.isDown && isMouseDown == false)
             {
                 isMouseDown = true;
@@ -65,23 +87,5 @@ function init(){
             {
                 isMouseDown = false;
             }
-            prevMouse = new Phaser.Point(game.input.x, game.input.y);
-		}
-        
-        //method to display all of the objects
-        function displayAll(){
-            graphics.clear();
-            graphics.beginFill(0xAADDFF);
-            graphics.lineStyle(5, 0x000000, 1);
-            graphics.drawRect(0, 0, 800, 600);
-            for(var i=0; i<puddles.length; i++)
-            {
-                puddles[i].display();
-            }
-            for(var i=0; i<circles.length; i++)
-            {
-                circles[i].display();
-            }
-            fish.display();
         }
 }
