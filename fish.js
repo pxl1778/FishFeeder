@@ -10,6 +10,7 @@ function initializeFish(thisFish)
 	//Displays the fish
 	thisFish.display = function(){
 		graphics.beginFill(0xFF0000);
+		graphics.lineStyle(0x000000, 0);
 		graphics.drawRect(thisFish.x, thisFish.y, 10, 10);
 	}
 	
