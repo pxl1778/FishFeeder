@@ -11,6 +11,7 @@ var puddles = [];
 var food = [];
 var prevMouse;
 var music;
+var foodGroup
 
 function init(){
     game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
@@ -32,6 +33,11 @@ function init(){
              prevMouse = new Phaser.Point(game.input.x, game.input.y);
              initializeFish(fish);
              music = game.sound.play('background');
+             
+            foodGroup = game.add.group();
+            foodGroup.enableBody = true;
+            foodGroup.physicsBodyType = Phaser.Physics.ARCADE;
+            
         }
         
         function createPuddle(){
@@ -110,7 +116,7 @@ function init(){
             {
                 isMouseDown = true;
                 circles.push(new Circle(game.input.x, game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
-                food.push(game.add.sprite(game.input.x, game.input.y));
+                food.push(foodGroup.create(game.input.x, game.input.y));
                 initializeFood(food[food.length -1], "basic");
             }
             //Making sure you can only click once.

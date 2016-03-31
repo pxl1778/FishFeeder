@@ -4,6 +4,10 @@ function initializeFood(thisFood, _foodType)
 	thisFood.width = 10;
 	thisFood.height = 10;
 	game.physics.arcade.enable(thisFood);
+	thisFood.body.collideWorldBounds = true;
+	thisFood.body.gravity.y = 10;
+	thisFood.body.maxVelocity.setTo(0, 8);
+	thisFood.body.bounce.setTo(0.5, 0.5);
 	
 	thisFood.display = function()
 	{
