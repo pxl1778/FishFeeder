@@ -10,19 +10,28 @@ var circles = [];
 var puddles = [];
 var food = [];
 var prevMouse;
+var music;
 
 function init(){
     game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
-        function preload () {
 
+        function preload () {
+			game.load.audio(
+			'background'
+			[
+				'audio/background.mp3',
+				'audio/background.ogg'
+			]);
+			
         }
 
-        function create () {
+        function create () {  
              graphics = game.add.graphics(0, 0);
              fish = game.add.sprite(0, 0);
              prevMouse = new Phaser.Point(game.input.x, game.input.y);
              initializeFish(fish);
+             music = game.sound.play('background');
         }
         
         function createPuddle(){
@@ -109,5 +118,6 @@ function init(){
             {
                 isMouseDown = false;
             }
-        }
+
+	}   
 }
