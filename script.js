@@ -32,7 +32,7 @@ function init(){
              prevMouse = new Phaser.Point(game.input.x, game.input.y);
              initializeFish(fish);
 
-              music.loop = true;
+             //music.loop = true;
              music = this.sound.play('back');
 			 music.volume -= 0.3;
              music = game.sound.play('background');
