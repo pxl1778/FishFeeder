@@ -11,18 +11,17 @@ var puddles = [];
 var food = [];
 var prevMouse;
 var music;
+var foodEat;
+var foodPlop;
 
 function init(){
-    game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
+    game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update});
 
         function preload () {
-			game.load.audio(
-			'background'
-			[
-				'audio/background.mp3',
-				'audio/background.ogg'
-			]);
+		
+			game.load.audio('back', 'audio/background.mp3');
+			game.load.audio('foodEat', 'audio/snap.mp3');
+			game.load.audio('foodPlop', 'audio/plop.mp3');
 			
         }
 
@@ -31,14 +30,17 @@ function init(){
              fish = game.add.sprite(0, 0);
              prevMouse = new Phaser.Point(game.input.x, game.input.y);
              initializeFish(fish);
-             music = game.sound.play('background');
+             
+              music.loop = true;
+             music = this.sound.play('back');
+			 music.volume -= 0.3;
         }
         
         function createPuddle(){
                  puddles.push(new Circle(game.input.x, game.input.y, 195, 245, 255));
              }
              
-        function update() {
+        function update() {		  
             displayAll();
             manageCircles();
             fish.update();
@@ -78,6 +80,8 @@ function init(){
                      fish.body.width++;
                      fish.height++;
                      fish.body.height++;
+                     foodEat = game.sound.play('foodEat');
+                     foodEat.volume -= 0.3;
                  }
             }
         }
@@ -109,9 +113,12 @@ function init(){
             if(game.input.activePointer.isDown && isMouseDown == false)
             {
                 isMouseDown = true;
+                foodPlop = game.sound.play('foodPlop');
                 circles.push(new Circle(game.input.x, game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
                 food.push(game.add.sprite(game.input.x, game.input.y));
                 initializeFood(food[food.length -1], "basic");
+				
+                
             }
             //Making sure you can only click once.
             if(game.input.activePointer.isUp)
@@ -120,4 +127,5 @@ function init(){
             }
 
 	}   
+
 }
