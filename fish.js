@@ -49,7 +49,5 @@ function initializeFish(thisFish)
 	thisFish.applyForce = function(){
 		thisFish.body.acceleration = Phaser.Point.add(thisFish.body.acceleration, thisFish.seekForce);
 	}
-	
-	
-	
+		
 }

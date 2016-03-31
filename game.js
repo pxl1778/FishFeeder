@@ -10,16 +10,21 @@ var gameState = {
 	
 	create: function(){
 		graphics = game.add.graphics(0, 0);
-		//fish = game.add.sprite(0, 0);
-        //fish1 = game.add.sprite(100, 100);
 		prevMouse = new Phaser.Point(game.input.x, game.input.y);
-		//initializeFish(fish);
-        //initializeFish(fish1);
 
 		music = this.sound.play('back');
 		music.volume -= 0.3;
         music.loop = true;
 		music = game.sound.play('background');
+        
+        // var style = { font: "30px Gloria Hallelujah", fill: "#fff", align: "left"};
+        text = game.add.text(120, 30, "Fish Size: " + "cm");
+        
+        text.anchor.set(.5);
+        text.font = "Gloria Hallelujah";
+        text.fontSize = 30;
+        text.fill = '#fff';
+        console.log(size);
 			
 		foodGroup = game.add.group();
 		foodGroup.enableBody = true;
@@ -39,15 +44,15 @@ var gameState = {
 	update: function(){
 		this.displayAll();
         this.manageCircles();
-        // fish.update();
-        // fish1.update();
         for(var i=0; i<fishArr.length; i++)
         {
             fishArr[i].update();
         }
-        this.click();
         this.checkFoodCollision();
+        this.click();
         prevMouse = new Phaser.Point(game.input.x, game.input.y);
+        size = fishArr[0].width /10;
+        text.setText("Fish Size: " + size +"cm");
 	},
 	
 	//method to display all of the objects
@@ -77,15 +82,15 @@ var gameState = {
         checkFoodCollision: function(){
             for(var i=0; i<food.length; i++)
             {
-                for(var i=0; i<fishArr.length; i++)
+                for(var j=0; j<fishArr.length; j++)
                 {
-                    if(game.physics.arcade.collide(fishArr[i], food[i]))
+                    if(game.physics.arcade.collide(fishArr[j], food[i]))
                     {
                         food.splice(i, 1);
-                        fishArr[i].width++;
-                        fishArr[i].body.width++;
-                        fishArr[i].height++;
-                        fishArr[i].body.height++;
+                        fishArr[j].width++;
+                        fishArr[j].body.width++;
+                        fishArr[j].height++;
+                        fishArr[j].body.height++;
                         foodEat = game.sound.play('foodEat');
                         foodEat.volume -= 0.3;
                     }
