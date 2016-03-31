@@ -8,6 +8,7 @@ var isMouseDown = false;
 var fish;
 var circles = [];
 var puddles = [];
+var food = [];
 var prevMouse;
 
 function init(){
@@ -33,6 +34,7 @@ function init(){
             manageCircles();
             fish.update();
             click();
+            checkFoodCollision();
             prevMouse = new Phaser.Point(game.input.x, game.input.y);
 		}
         
@@ -50,7 +52,25 @@ function init(){
             {
                 circles[i].display();
             }
+            for(var i=0; i<food.length; i++)
+            {
+                food[i].display();
+            }
             fish.display();
+        }
+        
+        function checkFoodCollision(){
+            for(var i=0; i<food.length; i++)
+            {
+                 if(game.physics.arcade.collide(fish, food[i]))
+                 {
+                     food.splice(i, 1);
+                     fish.width++;
+                     fish.body.width++;
+                     fish.height++;
+                     fish.body.height++;
+                 }
+            }
         }
         
         function manageCircles(){
@@ -81,6 +101,8 @@ function init(){
             {
                 isMouseDown = true;
                 circles.push(new Circle(game.input.x, game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
+                food.push(game.add.sprite(game.input.x, game.input.y));
+                initializeFood(food[food.length -1], "basic");
             }
             //Making sure you can only click once.
             if(game.input.activePointer.isUp)
