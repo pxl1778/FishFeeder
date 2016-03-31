@@ -14,16 +14,34 @@ var music;
 var foodEat;
 var foodPlop;
 var foodGroup;
+var size = 1;
+var text;
+
+var WebFontConfig = {
+
+    //  'active' means all requested fonts have finished loading
+    //  We set a 1 second delay before calling 'createText'.
+    //  For some reason if we don't the browser cannot render the text the first time it's created.
+    active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ["Gloria Hallelujah"]
+    }
+
+};
+
 
 function init(){
     game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update});
 
         function preload () {
-		
+			//  Load the Google WebFont Loader script
+			game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 			game.load.audio('back', 'audio/background.mp3');
 			game.load.audio('foodEat', 'audio/snap.mp3');
 			game.load.audio('foodPlop', 'audio/plop.mp3');
-			
+						
         }
 
         function create () {  
@@ -32,15 +50,25 @@ function init(){
              prevMouse = new Phaser.Point(game.input.x, game.input.y);
              initializeFish(fish);
 
-              music.loop = true;
+             // music.loop = true;
              music = this.sound.play('back');
 			 music.volume -= 0.3;
-             music = game.sound.play('background');
-             
+                       
             foodGroup = game.add.group();
             foodGroup.enableBody = true;
             foodGroup.physicsBodyType = Phaser.Physics.ARCADE;
-        }
+            
+            
+           // var style = { font: "30px Gloria Hallelujah", fill: "#fff", align: "left"};
+			text = game.add.text(120, 30, "Fish Size: " + "cm");
+			
+			text.anchor.set(.5);
+			text.font = "Gloria Hallelujah";
+			text.fontSize = 30;
+			text.fill = '#fff';
+			console.log(size);
+            
+            }
         
         function createPuddle(){
                  puddles.push(new Circle(game.input.x, game.input.y, 195, 245, 255));
@@ -53,6 +81,9 @@ function init(){
             click();
             checkFoodCollision();
             prevMouse = new Phaser.Point(game.input.x, game.input.y);
+            size = fish.width /10;
+            text.setText("Fish Size: " + size +"cm");
+       
 		}
         
         //method to display all of the objects
@@ -133,5 +164,6 @@ function init(){
             }
 
 	}   
+	
 
 }
