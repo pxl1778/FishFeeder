@@ -21,9 +21,9 @@ var Circle = function(x, y, red, green, blue){
 			{
 				decimalOpacity = 0;
 			}
-            graphics.lineStyle(5, 0x000000, 0);
-			graphics.beginFill(Phaser.Color.getColor(this.r, this.g, this.b), decimalOpacity);
-			graphics.drawCircle(this.x, this.y, this.radius);
+            app.main.graphics.lineStyle(5, 0x000000, 0);
+			app.main.graphics.beginFill(Phaser.Color.getColor(this.r, this.g, this.b), decimalOpacity);
+			app.main.graphics.drawCircle(this.x, this.y, this.radius);
 			this.opacity -= 1-(this.growSpeed * .01);
 		}
 		

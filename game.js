@@ -3,144 +3,144 @@
 var gameState = {
 	
 	preload: function(){
-		game.load.audio('back', 'audio/background.mp3');
-		game.load.audio('foodEat', 'audio/snap.mp3');
-		game.load.audio('foodPlop', 'audio/plop.mp3');
+		app.main.game.load.audio('back', 'audio/background.mp3');
+		app.main.game.load.audio('app.main.foodEat', 'audio/snap.mp3');
+		app.main.game.load.audio('app.main.foodPlop', 'audio/plop.mp3');
 	},
     
 	
 	create: function(){
-		graphics = game.add.graphics(0, 0);
-		prevMouse = new Phaser.Point(game.input.x, game.input.y);
+		app.main.graphics = app.main.game.add.app.main.graphics(0, 0);
+		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y);
 
-		music = this.sound.play('back');
-		music.volume -= 0.3;
-        music.loop = true;
-		music = game.sound.play('background');
+		app.main.music = this.sound.play('back');
+		app.main.music.volume -= 0.3;
+        app.main.music.loop = true;
+		app.main.music = app.main.game.sound.play('background');
         
         // var style = { font: "30px Gloria Hallelujah", fill: "#fff", align: "left"};
-        text = game.add.text(120, 30, "Fish Size: " + "cm");
+        app.main.text = app.main.game.add.app.main.text(120, 30, "Fish app.main.size: " + "cm");
         
-        text.anchor.set(.5);
-        text.font = "Gloria Hallelujah";
-        text.fontSize = 30;
-        text.fill = '#fff';
-        console.log(size);
+        app.main.text.anchor.set(.5);
+        app.main.text.font = "Gloria Hallelujah";
+        app.main.text.fontapp.main.size = 30;
+        app.main.text.fill = '#fff';
+        console.log(app.main.size);
 			
-		foodGroup = game.add.group();
-		foodGroup.enableBody = true;
-		foodGroup.physicsBodyType = Phaser.Physics.ARCADE;
-        fishGroup = game.add.group();
-        fishGroup.enableBody = true;
-        fishGroup.physicsBodyType = Phaser.Physics.ARCADE;
+		app.main.foodGroup = app.main.game.add.group();
+		app.main.foodGroup.enableBody = true;
+		app.main.foodGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        app.main.fishGroup = app.main.game.add.group();
+        app.main.fishGroup.enableBody = true;
+        app.main.fishGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
-        fishArr.push(fishGroup.create(0, 0));
-        fishArr.push(fishGroup.create(150, 234));
-        for(var i=0; i<fishArr.length; i++)
+        app.main.fishArr.push(app.main.fishGroup.create(0, 0));
+        app.main.fishArr.push(app.main.fishGroup.create(150, 234));
+        for(var i=0; i<app.main.fishArr.length; i++)
         {
-            initializeFish(fishArr[i]);
+            initializeFish(app.main.fishArr[i]);
         }
 	},
 	
 	update: function(){
 		this.displayAll();
-        this.manageCircles();
-        for(var i=0; i<fishArr.length; i++)
+        this.manageapp.main.circles();
+        for(var i=0; i<app.main.fishArr.length; i++)
         {
-            fishArr[i].update();
+            app.main.fishArr[i].update();
         }
         this.checkFoodCollision();
         this.click();
-        prevMouse = new Phaser.Point(game.input.x, game.input.y);
-        size = fishArr[0].width /10;
-        text.setText("Fish Size: " + size +"cm");
+        app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y);
+        app.main.size = app.main.fishArr[0].width /10;
+        app.main.text.setapp.main.text("Fish app.main.size: " + app.main.size +"cm");
 	},
 	
 	//method to display all of the objects
     displayAll: function(){
-            graphics.clear();
-            graphics.beginFill(0xAADDFF);
-            graphics.lineStyle(5, 0x000000, 1);
-            graphics.drawRect(0, 0, 800, 600);
-            for(var i=0; i<puddles.length; i++)
+            app.main.graphics.clear();
+            app.main.graphics.beginFill(0xAADDFF);
+            app.main.graphics.lineStyle(5, 0x000000, 1);
+            app.main.graphics.drawRect(0, 0, 800, 600);
+            for(var i=0; i<app.main.puddles.length; i++)
             {
-                puddles[i].display();
+                app.main.puddles[i].display();
             }
-            for(var i=0; i<circles.length; i++)
+            for(var i=0; i<app.main.circles.length; i++)
             {
-                circles[i].display();
+                app.main.circles[i].display();
             }
-            for(var i=0; i<food.length; i++)
+            for(var i=0; i<app.main.food.length; i++)
             {
-                food[i].display();
+                app.main.food[i].display();
             }
-            for(var i=0; i<fishArr.length; i++)
+            for(var i=0; i<app.main.fishArr.length; i++)
             {
-                fishArr[i].display();
+                app.main.fishArr[i].display();
             }
         },
         
         checkFoodCollision: function(){
-            for(var i=0; i<food.length; i++)
+            for(var i=0; i<app.main.food.length; i++)
             {
-                for(var j=0; j<fishArr.length; j++)
+                for(var j=0; j<app.main.fishArr.length; j++)
                 {
-                    if(game.physics.arcade.collide(fishArr[j], food[i]))
+                    if(app.main.game.physics.arcade.collide(app.main.fishArr[j], app.main.food[i]))
                     {
-                        food.splice(i, 1);
-                        fishArr[j].width++;
-                        fishArr[j].body.width++;
-                        fishArr[j].height++;
-                        fishArr[j].body.height++;
-                        foodEat = game.sound.play('foodEat');
-                        foodEat.volume -= 0.3;
+                        app.main.food.splice(i, 1);
+                        app.main.fishArr[j].width++;
+                        app.main.fishArr[j].body.width++;
+                        app.main.fishArr[j].height++;
+                        app.main.fishArr[j].body.height++;
+                        app.main.app.main.foodEat = app.main.game.sound.play('app.main.app.main.foodEat');
+                        app.main.app.main.foodEat.volume -= 0.3;
                     }
                 }
             }
         },
         
         manageCircles: function(){
-            for(var i=0; i<circles.length; i++)
+            for(var i=0; i<app.main.circles.length; i++)
             {
-                if(circles[i].opacity < 0)
+                if(app.main.circles[i].opacity < 0)
                 {
-                    circles.splice(i, 1);
+                    app.main.circles.splice(i, 1);
                 }
             }
             
-            for(var i=0; i<puddles.length; i++)
+            for(var i=0; i<app.main.puddles.length; i++)
             {
-                if(puddles[i].opacity < 0)
+                if(app.main.puddles[i].opacity < 0)
                 {
-                    puddles.splice(i, 1);
+                    app.main.puddles.splice(i, 1);
                 }
             }
             
-            if(prevMouse.x != game.input.x && prevMouse.y != game.input.y)
+            if(app.main.prevMouse.x != app.main.game.input.x && app.main.prevMouse.y != app.main.game.input.y)
             {
                 this.createPuddle();
             }
         },
         
         click: function(){
-            if(game.input.activePointer.isDown && isMouseDown == false)
+            if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
-                isMouseDown = true;
-                foodPlop = game.sound.play('foodPlop');
-                circles.push(new Circle(game.input.x, game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
-                food.push(foodGroup.create(game.input.x, game.input.y));
+                app.main.isMouseDown = true;
+                app.main.foodPlop = app.main.game.sound.play('app.main.foodPlop');
+                app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
+                food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y));
                 initializeFood(food[food.length -1], "basic");
             }
             //Making sure you can only click once.
-            if(game.input.activePointer.isUp)
+            if(app.main.game.input.activePointer.isUp)
             {
-                isMouseDown = false;
+                app.main.isMouseDown = false;
             }
 
 	},
 	
 	createPuddle: function(){
-                 puddles.push(new Circle(game.input.x, game.input.y, 195, 245, 255));
+                 app.main.puddles.push(new Circle(app.main.game.input.x, app.main.game.input.y, 195, 245, 255));
              }
 	
 }
