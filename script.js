@@ -6,8 +6,6 @@ var game;
 var graphics;
 var isMouseDown = false;
 var fishArr = [];
-var fish;
-var fish1;
 var circles = [];
 var puddles = [];
 var food = [];
