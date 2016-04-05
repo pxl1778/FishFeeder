@@ -2,7 +2,7 @@
 
 function initializeFish(thisFish)
 {
-	game.physics.arcade.enable(thisFish);//adding the body component
+	app.main.game.physics.arcade.enable(thisFish);//adding the body component
 	thisFish.body.collideWorldsBounds = true;
 	thisFish.body.bounce.setTo(.9, .9);
 	thisFish.seekForce = new Phaser.Point(0, 0); //initializing seek force
@@ -13,9 +13,9 @@ function initializeFish(thisFish)
 	
 	//Displays the fish
 	thisFish.display = function(){
-		graphics.beginFill(0xFF0000);
-		graphics.lineStyle(0x000000, 0);
-		graphics.drawRect(thisFish.x, thisFish.y, thisFish.width, thisFish.height);
+		app.main.graphics.beginFill(0xFF0000);
+		app.main.graphics.lineStyle(0x000000, 0);
+		app.main.graphics.drawRect(thisFish.x, thisFish.y, thisFish.width, thisFish.height);
 	}
 	
 	//updates the physics and forces
@@ -24,19 +24,19 @@ function initializeFish(thisFish)
 		thisFish.seek();
 		thisFish.applyForce();
 		thisFish.body.velocity = Phaser.Point.add(thisFish.body.velocity, thisFish.body.acceleration);
-		if(Math.abs(game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 10 && food.length > 0)
+		if(Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 10 && app.main.food.length > 0)
 		{
-			food.splice(0, 1);
+			app.main.food.splice(0, 1);
 		}
 	}
 	
 	//adds forces to move towards the seekTarget
 	thisFish.seek = function(){
-		if(food.length > 0) //making sure there isn't an undefined target
+		if(app.main.food.length > 0) //making sure there isn't an undefined target
 		{
-			thisFish.seekTarget = food[0].position;
+			thisFish.seekTarget = app.main.food[0].position;
 		}
-		else if (Math.abs(game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 15)
+		else if (Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 15)
 		{
 			thisFish.seekTarget = new Phaser.Point(Math.floor(Math.random() * 800), Math.floor(Math.random() * 600));
 		}

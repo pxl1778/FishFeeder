@@ -5,7 +5,7 @@ function initializeFood(thisFood, _foodType)
 	thisFood.foodType = _foodType;
 	thisFood.width = 10;
 	thisFood.height = 10;
-	game.physics.arcade.enable(thisFood);
+	app.main.game.physics.arcade.enable(thisFood);
 	
 	thisFood.body.collideWorldBounds = true;
 	thisFood.body.gravity.y = 10;
@@ -15,9 +15,9 @@ function initializeFood(thisFood, _foodType)
 	{
 		if(this.foodType == "basic")
 		{
-			graphics.beginFill(0x000000, 1);
-			graphics.lineStyle(0x000000, 0);
-			graphics.drawRect(this.position.x-(thisFood.width/2), this.position.y-(thisFood.height/2), thisFood.width, thisFood.height);
+			app.main.graphics.beginFill(0x000000, 1);
+			app.main.graphics.lineStyle(0x000000, 0);
+			app.main.graphics.drawRect(this.position.x-(thisFood.width/2), this.position.y-(thisFood.height/2), thisFood.width, thisFood.height);
 		}
 	}
 }

@@ -1,26 +1,26 @@
 'use strict';
 
 window.onload = init;
+var app = app || {};
 
-var game;
-var graphics;
-var isMouseDown = false;
-var fishArr = [];
-var fish;
-var fish1;
-var circles = [];
-var puddles = [];
-var food = [];
-var prevMouse;
-var music;
-var foodEat;
-var foodPlop;
-var foodGroup;
-var fishGroup;
-var size = 1;
-var text;
+app.main = {  
+	game: undefined,
+	graphics: undefined,
+	isMouseDown: false,
+	fishArr: [],
+	circles: [],
+	puddles: [],
+	food: [],
+	prevMouse: undefined,
+	music: undefined,
+	foodEat: undefined, 
+	foodPlop: undefined,
+	foodGroup: undefined,
+	fishGroup: undefined,
+	size : 1, 
+	text: undefined,
 
-var WebFontConfig = {
+	WebFontConfig : {
 
     //  'active' means all requested fonts have finished loading
     //  We set a 1 second delay before calling 'createText'.
@@ -32,16 +32,16 @@ var WebFontConfig = {
       families: ["Gloria Hallelujah"]
     }
 
-};
-
+}
+}
 
 function init(){
-    game = new Phaser.Game(800, 600, Phaser.AUTO, '');
+    app.main.game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 
-    game.state.add("boot", bootState);
-    game.state.add("game", gameState);
-    game.state.add("tutorial", tutorialState);
+    app.main.game.state.add("boot", bootState);
+    app.main.game.state.add("app.main.game", app.main.gameState);
+    app.main.game.state.add("tutorial", tutorialState);
     
-    game.state.start("game");
+    app.main.game.state.start("app.main.game");
 
 }

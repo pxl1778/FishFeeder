@@ -1983,7 +1983,7 @@ Narrowphase.prototype.particleCapsule = function(
  * Circle/line Narrowphase
  * @method circleLine
  * @param  {Body} circleBody
- * @param  {Circle} circleShape
+ * @param  {Circle} circleshape
  * @param  {Array} circleOffset
  * @param  {Number} circleAngle
  * @param  {Body} lineBody
@@ -1997,7 +1997,7 @@ Narrowphase.prototype.particleCapsule = function(
 Narrowphase.prototype[Shape.CIRCLE | Shape.LINE] =
 Narrowphase.prototype.circleLine = function(
     circleBody,
-    circleShape,
+    circleshape,
     circleOffset,
     circleAngle,
     lineBody,
@@ -2009,7 +2009,7 @@ Narrowphase.prototype.circleLine = function(
     circleRadius
 ){
     var lineRadius = lineRadius || 0,
-        circleRadius = typeof(circleRadius)!=="undefined" ? circleRadius : circleShape.radius,
+        circleRadius = typeof(circleRadius)!=="undefined" ? circleRadius : circleshape.radius,
 
         orthoDist = tmp1,
         lineToCircleOrthoUnit = tmp2,
@@ -2082,7 +2082,7 @@ Narrowphase.prototype.circleLine = function(
                 return true;
             }
 
-            var c = this.createContactEquation(circleBody,lineBody,circleShape,lineShape);
+            var c = this.createContactEquation(circleBody,lineBody,circleshape,lineShape);
 
             vec2.scale(c.normalA, orthoDist, -1);
             vec2.normalize(c.normalA, c.normalA);
@@ -2120,7 +2120,7 @@ Narrowphase.prototype.circleLine = function(
                 return true;
             }
 
-            var c = this.createContactEquation(circleBody,lineBody,circleShape,lineShape);
+            var c = this.createContactEquation(circleBody,lineBody,circleshape,lineShape);
 
             vec2.copy(c.normalA, dist);
             vec2.normalize(c.normalA,c.normalA);
@@ -2170,7 +2170,7 @@ Narrowphase.prototype.circleCapsule = function(bi,si,xi,ai, bj,sj,xj,aj, justTes
  * Circle/convex Narrowphase.
  * @method circleConvex
  * @param  {Body} circleBody
- * @param  {Circle} circleShape
+ * @param  {Circle} circleshape
  * @param  {Array} circleOffset
  * @param  {Number} circleAngle
  * @param  {Body} convexBody
@@ -2184,7 +2184,7 @@ Narrowphase.prototype[Shape.CIRCLE | Shape.CONVEX] =
 Narrowphase.prototype[Shape.CIRCLE | Shape.BOX] =
 Narrowphase.prototype.circleConvex = function(
     circleBody,
-    circleShape,
+    circleshape,
     circleOffset,
     circleAngle,
     convexBody,
@@ -2194,7 +2194,7 @@ Narrowphase.prototype.circleConvex = function(
     justTest,
     circleRadius
 ){
-    var circleRadius = typeof(circleRadius)==="number" ? circleRadius : circleShape.radius;
+    var circleRadius = typeof(circleRadius)==="number" ? circleRadius : circleshape.radius;
 
     var worldVertex0 = tmp1,
         worldVertex1 = tmp2,
@@ -2246,7 +2246,7 @@ Narrowphase.prototype.circleConvex = function(
         vec2.rotate90cw(worldNormal, worldEdgeUnit);
 
         // Get point on circle, closest to the polygon
-        vec2.scale(candidate,worldNormal,-circleShape.radius);
+        vec2.scale(candidate,worldNormal,-circleshape.radius);
         add(candidate,candidate,circleOffset);
 
         if(pointInConvex(candidate,convexShape,convexOffset,convexAngle)){
@@ -2270,7 +2270,7 @@ Narrowphase.prototype.circleConvex = function(
             return true;
         }
 
-        var c = this.createContactEquation(circleBody,convexBody,circleShape,convexShape);
+        var c = this.createContactEquation(circleBody,convexBody,circleshape,convexShape);
         vec2.sub(c.normalA, minCandidate, circleOffset);
         vec2.normalize(c.normalA, c.normalA);
 
@@ -2305,7 +2305,7 @@ Narrowphase.prototype.circleConvex = function(
                     return true;
                 }
 
-                var c = this.createContactEquation(circleBody,convexBody,circleShape,convexShape);
+                var c = this.createContactEquation(circleBody,convexBody,circleshape,convexShape);
 
                 vec2.copy(c.normalA, dist);
                 vec2.normalize(c.normalA,c.normalA);
@@ -2724,7 +2724,7 @@ Narrowphase.prototype.particlePlane = function(
  * Circle/Particle Narrowphase
  * @method circleParticle
  * @param  {Body} circleBody
- * @param  {Circle} circleShape
+ * @param  {Circle} circleshape
  * @param  {Array} circleOffset
  * @param  {Number} circleAngle
  * @param  {Body} particleBody
@@ -2736,7 +2736,7 @@ Narrowphase.prototype.particlePlane = function(
 Narrowphase.prototype[Shape.CIRCLE | Shape.PARTICLE] =
 Narrowphase.prototype.circleParticle = function(
     circleBody,
-    circleShape,
+    circleshape,
     circleOffset,
     circleAngle,
     particleBody,
@@ -2748,19 +2748,19 @@ Narrowphase.prototype.circleParticle = function(
     var dist = tmp1;
 
     sub(dist, particleOffset, circleOffset);
-    if(vec2.squaredLength(dist) > Math.pow(circleShape.radius, 2)){
+    if(vec2.squaredLength(dist) > Math.pow(circleshape.radius, 2)){
         return 0;
     }
     if(justTest){
         return true;
     }
 
-    var c = this.createContactEquation(circleBody,particleBody,circleShape,particleShape);
+    var c = this.createContactEquation(circleBody,particleBody,circleshape,particleShape);
     vec2.copy(c.normalA, dist);
     vec2.normalize(c.normalA,c.normalA);
 
     // Vector from circle to contact point is the normal times the circle radius
-    vec2.scale(c.contactPointA, c.normalA, circleShape.radius);
+    vec2.scale(c.contactPointA, c.normalA, circleshape.radius);
     add(c.contactPointA, c.contactPointA, circleOffset);
     sub(c.contactPointA, c.contactPointA, circleBody.position);
 
@@ -2865,7 +2865,7 @@ Narrowphase.prototype.planeCapsule = function(
 Narrowphase.prototype[Shape.CIRCLE | Shape.PLANE] =
 Narrowphase.prototype.circlePlane = function(   bi,si,xi,ai, bj,sj,xj,aj, justTest ){
     var circleBody = bi,
-        circleShape = si,
+        circleshape = si,
         circleOffset = xi, // Offset from body center, rotated!
         planeBody = bj,
         shapeB = sj,
@@ -2887,7 +2887,7 @@ Narrowphase.prototype.circlePlane = function(   bi,si,xi,ai, bj,sj,xj,aj, justTe
     // Normal direction distance
     var d = dot(worldNormal, planeToCircle);
 
-    if(d > circleShape.radius){
+    if(d > circleshape.radius){
         return 0; // No overlap. Abort.
     }
 
@@ -2902,7 +2902,7 @@ Narrowphase.prototype.circlePlane = function(   bi,si,xi,ai, bj,sj,xj,aj, justTe
     vec2.copy(contact.normalA, worldNormal);
 
     // rj is the vector from circle center to the contact point
-    vec2.scale(contact.contactPointB, contact.normalA, -circleShape.radius);
+    vec2.scale(contact.contactPointB, contact.normalA, -circleshape.radius);
     add(contact.contactPointB, contact.contactPointB, circleOffset);
     sub(contact.contactPointB, contact.contactPointB, circleBody.position);
 
@@ -3386,10 +3386,10 @@ var circleHeightfield_candidate = vec2.create(),
  * @param  {Number}         aj
  */
 Narrowphase.prototype[Shape.CIRCLE | Shape.HEIGHTFIELD] =
-Narrowphase.prototype.circleHeightfield = function( circleBody,circleShape,circlePos,circleAngle,
+Narrowphase.prototype.circleHeightfield = function( circleBody,circleshape,circlePos,circleAngle,
                                                     hfBody,hfShape,hfPos,hfAngle, justTest, radius ){
     var data = hfShape.heights,
-        radius = radius || circleShape.radius,
+        radius = radius || circleshape.radius,
         w = hfShape.elementWidth,
         dist = circleHeightfield_dist,
         candidate = circleHeightfield_candidate,
@@ -3479,7 +3479,7 @@ Narrowphase.prototype.circleHeightfield = function( circleBody,circleShape,circl
             vec2.add(minCandidate,candidate,dist);
             vec2.copy(minCandidateNormal,worldNormal);
 
-            var c = this.createContactEquation(hfBody,circleBody,hfShape,circleShape);
+            var c = this.createContactEquation(hfBody,circleBody,hfShape,circleshape);
 
             // Normal is out of the heightfield
             vec2.copy(c.normalA, minCandidateNormal);
@@ -3519,7 +3519,7 @@ Narrowphase.prototype.circleHeightfield = function( circleBody,circleShape,circl
 
                 found = true;
 
-                var c = this.createContactEquation(hfBody,circleBody,hfShape,circleShape);
+                var c = this.createContactEquation(hfBody,circleBody,hfShape,circleshape);
 
                 // Construct normal - out of heightfield
                 vec2.copy(c.normalA, dist);
@@ -9630,7 +9630,7 @@ Capsule.prototype.raycast = function(result, ray, position, angle){
         }
     }
 
-    // Circles
+    // circles
     var diagonalLengthSquared = Math.pow(this.radius, 2) + Math.pow(halfLen, 2);
     for(var i=0; i<2; i++){
         vec2.set(l0, halfLen * (i*2-1), 0);
@@ -9705,8 +9705,8 @@ module.exports = Circle;
  * @param {number} [options.radius=1] The radius of this circle
  *
  * @example
- *     var circleShape = new Circle({ radius: 1 });
- *     body.addShape(circleShape);
+ *     var circleshape = new Circle({ radius: 1 });
+ *     body.addShape(circleshape);
  */
 function Circle(options){
     if(typeof(arguments[0]) === 'number'){
