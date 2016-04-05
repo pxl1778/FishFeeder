@@ -7,6 +7,7 @@ var gameState = {
 		game.load.audio('foodEat', 'audio/snap.mp3');
 		game.load.audio('foodPlop', 'audio/plop.mp3');
 	},
+    
 	
 	create: function(){
 		graphics = game.add.graphics(0, 0);
