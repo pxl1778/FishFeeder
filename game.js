@@ -5,8 +5,8 @@ var gameState = {
 	
 	preload: function(){
 		app.main.game.load.audio('back', 'audio/background.mp3');
-		app.main.game.load.audio('app.main.foodEat', 'audio/snap.mp3');
-		app.main.game.load.audio('app.main.foodPlop', 'audio/plop.mp3');
+		app.main.game.load.audio('foodEat', 'audio/snap.mp3');
+		app.main.game.load.audio('foodPlop', 'audio/plop.mp3');
 	},
     created : false,
     
@@ -21,13 +21,12 @@ var gameState = {
 		app.main.music = app.main.game.sound.play('background');
         
         // var style = { font: "30px Gloria Hallelujah", fill: "#fff", align: "left"};
-        app.main.text = app.main.game.add.text(120, 30, "Fish app.main.size: " + "cm");
+        app.main.text = app.main.game.add.text(120, 30, "Fish size: " + "cm");
         
         app.main.text.anchor.set(.5);
         app.main.text.font = "Gloria Hallelujah";
         app.main.text.fontSize = 30;
         app.main.text.fill = '#fff';
-        console.log(app.main.size);
 			
 		app.main.foodGroup = app.main.game.add.group();
 		app.main.foodGroup.enableBody = true;
@@ -42,28 +41,27 @@ var gameState = {
         {
             initializeFish(app.main.fishArr[i]);
         }
+        this.created = true;
 	},
 	
 	update: function(){
-        if(!this.created)
+        if(this.created)
         {
-            this.create();
-            this.created = true;
+            this.displayAll();
+            this.manageCircles();
+            for(var i=0; i<app.main.fishArr.length; i++)
+            {
+                app.main.fishArr[i].update();
+            }
+            this.checkFoodCollision();
+            this.click();
+            app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y);
+            if(app.main.fishArr.length > 0)
+            {
+                app.main.size = app.main.fishArr[0].width /10;
+            }
+            app.main.text.setText("Fish size: " + app.main.size +"cm");
         }
-		this.displayAll();
-        this.manageCircles();
-        for(var i=0; i<app.main.fishArr.length; i++)
-        {
-            app.main.fishArr[i].update();
-        }
-        this.checkFoodCollision();
-        this.click();
-        app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y);
-        if(app.main.fishArr.length > 0)
-        {
-            app.main.size = app.main.fishArr[0].width /10;
-        }
-        app.main.text.setText("Fish app.main.size: " + app.main.size +"cm");
 	},
 	
 	//method to display all of the objects
@@ -136,7 +134,7 @@ var gameState = {
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
                 app.main.isMouseDown = true;
-                app.main.foodPlop = app.main.game.sound.play('app.main.foodPlop');
+                app.main.foodPlop = app.main.game.sound.play('foodPlop');
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
                 app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y));
                 initializeFood(app.main.food[app.main.food.length -1], "basic");
