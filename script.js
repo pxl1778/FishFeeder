@@ -38,9 +38,11 @@ function init(){
     app.main.game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 
     app.main.game.state.add("boot", bootState);
-    app.main.game.state.add("app.main.game", app.main.gameState);
+    app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);
     
-    app.main.game.state.start("app.main.game");
+    app.main.game.state.start("game");
+	
+	
 
 }

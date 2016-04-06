@@ -1,3 +1,6 @@
+"use strict";
+var app = app || {};
+
 function initializeFood(thisFood, _foodType)
 {
 	

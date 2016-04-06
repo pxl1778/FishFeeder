@@ -1,4 +1,5 @@
-'use script';
+'use strict';
+var app = app || {};
 
 function initializeFish(thisFish)
 {

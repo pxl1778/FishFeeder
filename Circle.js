@@ -1,4 +1,5 @@
 'use strict';
+var app = app || {};
 var Circle = function(x, y, red, green, blue){
 	this.x = x;
 	this.y = y;
