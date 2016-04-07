@@ -35,10 +35,11 @@ app.main = {
 		}
 	},
 	
+	//Adds necessary values to the poops
 	initializePoop : function(thisPoop, index)
 	{
-		thisPoop.width = 5;
-		thisPoop.height = 10;
+		thisPoop.width = 8;
+		thisPoop.height = 12;
 		thisPoop.arrIndex = index;
 		
 		//Physics
@@ -77,6 +78,7 @@ app.main = {
 		
 	},
 	
+	//Adds necesary values to the fish
 	initializeFish : function(thisFish)
 	{
 		app.main.game.physics.arcade.enable(thisFish);//adding the body component
@@ -107,6 +109,7 @@ app.main = {
 			}
 		}
 		
+		//The fish takes a poop every 4 seconds where it currently is
 		thisFish.takeAPoop = function(){
 			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y));
 			app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
@@ -136,6 +139,7 @@ app.main = {
 			
 	},
 	
+	//adds necessary values to the food objects
 	initializeFood : function(thisFood, _foodType)
 	{
 		thisFood.foodType = _foodType;
@@ -169,7 +173,4 @@ function init(){
     app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);
     app.main.game.state.start("boot");
-	
-	
-
 }

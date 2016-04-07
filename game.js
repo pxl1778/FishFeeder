@@ -12,13 +12,15 @@ var gameState = {
 	
 	create: function(){
 		app.main.graphics = app.main.game.add.graphics(0, 0);
-		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y);
-
+		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //Tracking the mouse position
+        
+        //music
 		app.main.music = this.sound.play('back');
 		app.main.music.volume -= 0.3;
         app.main.music.loop = true;
 		app.main.music = app.main.game.sound.play('background');
         
+        //On screen text
         // var style = { font: "30px Gloria Hallelujah", fill: "#fff", align: "left"};
         app.main.text = app.main.game.add.text(120, 30, "Fish size: " + "cm");
         
@@ -50,18 +52,18 @@ var gameState = {
 	update: function(){
         if(this.created)
         {
-            this.displayAll();
-            this.manageCircles();
+            this.displayAll(); //Displays all of the objects in the scene
+            this.manageCircles(); //Deals with drawing the circle special effects
             for(var i=0; i<app.main.fishArr.length; i++)
             {
-                app.main.fishArr[i].update();
+                app.main.fishArr[i].update(); //updating every fish that might be on the screen
             }
-            this.checkFoodCollision();
-            this.click();
-            app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y);
+            this.checkFoodCollision(); //Checks if the fish has collided with the food
+            this.click(); //Checks for clicking to feed the fish
+            app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //recording the moues pos
             if(app.main.fishArr.length > 0)
             {
-                app.main.size = app.main.fishArr[0].width /10;
+                app.main.size = app.main.fishArr[0].width /10; //Updating the size of the fish
             }
             app.main.text.setText("Fish size: " + app.main.size +"cm\nMoney: " + app.main.money);
         }
@@ -99,6 +101,7 @@ var gameState = {
             // }
         },
         
+        //Checks whether or not the fish is colliding with the food.
         checkFoodCollision: function(){
             for(var i=0; i<app.main.food.length; i++)
             {
@@ -118,6 +121,7 @@ var gameState = {
             }
         },
         
+        //Draws puddles on the screen when the mouse moves
         manageCircles: function(){
             for(var i=0; i<app.main.circles.length; i++)
             {
@@ -137,10 +141,11 @@ var gameState = {
             
             if(app.main.prevMouse.x != app.main.game.input.x && app.main.prevMouse.y != app.main.game.input.y)
             {
-                this.createPuddle();
+                app.main.puddles.push(new Circle(app.main.game.input.x, app.main.game.input.y, 195, 245, 255));
             }
         },
         
+        //Called every frame, checks if the player is clicking to leave food.
         click: function(){
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
@@ -157,10 +162,6 @@ var gameState = {
                 app.main.isMouseDown = false;
             }
 
-	},
-	
-	createPuddle: function(){
-                 app.main.puddles.push(new Circle(app.main.game.input.x, app.main.game.input.y, 195, 245, 255));
-             }
+	}
 	
 }
