@@ -27,19 +27,23 @@ var gameState = {
         app.main.text.font = "Gloria Hallelujah";
         app.main.text.fontSize = 30;
         app.main.text.fill = '#fff';
-			
+		
+        //Setting up physics for game objects
 		app.main.foodGroup = app.main.game.add.group();
 		app.main.foodGroup.enableBody = true;
 		app.main.foodGroup.physicsBodyType = Phaser.Physics.ARCADE;
         app.main.fishGroup = app.main.game.add.group();
         app.main.fishGroup.enableBody = true;
         app.main.fishGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        app.main.poopGroup = app.main.game.add.group();
+        app.main.poopGroup.enableBody = true;
+        app.main.poopGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
+        //initializing the fish
         app.main.fishArr.push(app.main.fishGroup.create(0, 0));
-        console.log(app.main.fishArr.length);
         for(var i=0; i<app.main.fishArr.length; i++)
         {
-            initializeFish(app.main.fishArr[i]);
+            app.main.initializeFish(app.main.fishArr[i]);
         }
         this.created = true;
 	},
@@ -61,6 +65,7 @@ var gameState = {
                 app.main.size = app.main.fishArr[0].width /10;
             }
             app.main.text.setText("Fish size: " + app.main.size +"cm");
+            
         }
 	},
 	
@@ -85,6 +90,10 @@ var gameState = {
             for(var i=0; i<app.main.fishArr.length; i++)
             {
                 app.main.fishArr[i].display();
+            }
+            for(var i=0; i<app.main.poop.length; i++)
+            {
+                app.main.poop[i].display();
             }
         },
         
@@ -137,7 +146,7 @@ var gameState = {
                 app.main.foodPlop = app.main.game.sound.play('foodPlop');
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
                 app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y));
-                initializeFood(app.main.food[app.main.food.length -1], "basic");
+                app.main.initializeFood(app.main.food[app.main.food.length -1], "basic");
             }
             //Making sure you can only click once.
             if(app.main.game.input.activePointer.isUp)
