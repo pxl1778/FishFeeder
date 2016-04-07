@@ -37,32 +37,38 @@ app.main = {
 	
 	initializePoop : function(thisPoop, index)
 	{
-		thisPoop.width = 20;
-		thisPoop.height = 40;
+		thisPoop.width = 5;
+		thisPoop.height = 10;
 		thisPoop.arrIndex = index;
+		
 		//Physics
 		app.main.game.physics.arcade.enable(thisPoop);
 		thisPoop.body.collideWorldBounds = true;
 		thisPoop.body.gravity.y = 20;
 		thisPoop.body.maxVelocity.setTo(0, 12);
 		thisPoop.body.bounce.setTo(1, 1);
-		//input
-		thisPoop.inputEnabled = true;
 		
+		//Gets rid of the poop and rewards the player
 		thisPoop.cleanPoop = function(){
-			console.log(thisPoop.arrIndex);
-			app.main.poop.splice(thisPoop.arrIndex, 1);
-			for(var i=thisPoop.arrIndex; i<app.main.poop.length; i++)
+			if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
 			{
-				app.main.poop[i].arrIndex --;
+				app.main.poop.splice(thisPoop.arrIndex, 1);
+				for(var i=thisPoop.arrIndex; i<app.main.poop.length; i++)
+				{
+					app.main.poop[i].arrIndex --;
+				}
+				app.main.money ++;
 			}
-			app.main.money ++;
+			app.main.isMouseDown = true;
+			
 		}
 		
+		//Adds cleanPoop to input when poop is clicked
+		thisPoop.inputEnabled = true;
 		thisPoop.events.onInputDown.add(thisPoop.cleanPoop, this);
 		
+		//Displays the poop
 		thisPoop.display = function(){
-			console.log(thisPoop.arrIndex);
 			app.main.graphics.beginFill(0x694D20);
 			app.main.graphics.lineStyle(0x000000, 0);
 			app.main.graphics.drawRect(thisPoop.x, thisPoop.y, thisPoop.width, thisPoop.height);
@@ -103,10 +109,7 @@ app.main = {
 		
 		thisFish.takeAPoop = function(){
 			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y));
-			for(var i = 0; i<app.main.poop.length; i++)
-			{
-				app.main.initializePoop(app.main.poop[i], app.main.poop.length-1);
-			}
+			app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
 			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
 		}
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);

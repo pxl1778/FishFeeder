@@ -9,7 +9,6 @@ var gameState = {
 		app.main.game.load.audio('foodPlop', 'audio/plop.mp3');
 	},
     created : false,
-    
 	
 	create: function(){
 		app.main.graphics = app.main.game.add.graphics(0, 0);
@@ -64,8 +63,7 @@ var gameState = {
             {
                 app.main.size = app.main.fishArr[0].width /10;
             }
-            app.main.text.setText("Fish size: " + app.main.size +"cm");
-            
+            app.main.text.setText("Fish size: " + app.main.size +"cm\nMoney: " + app.main.money);
         }
 	},
 	
@@ -95,6 +93,10 @@ var gameState = {
             {
                 app.main.poop[i].display();
             }
+            // for(var i=0; i<app.main.poopGroup.children.length; i++)
+            // {
+            //     app.main.poopGroup.children[i].display();
+            // }
         },
         
         checkFoodCollision: function(){
@@ -142,6 +144,7 @@ var gameState = {
         click: function(){
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
+                console.log("1");
                 app.main.isMouseDown = true;
                 app.main.foodPlop = app.main.game.sound.play('foodPlop');
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
