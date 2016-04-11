@@ -7,12 +7,25 @@ var gameState = {
 		app.main.game.load.audio('back', 'audio/background.mp3');
 		app.main.game.load.audio('foodEat', 'audio/snap.mp3');
 		app.main.game.load.audio('foodPlop', 'audio/plop.mp3');
+        app.main.game.load.image("tankbackground", "images/FishTank.png");
+        app.main.game.load.image("bubble", "images/bubble.png");
+        app.main.game.load.image("poop", "images/poop.png");
 	},
     created : false,
+    bubbleParticles: undefined,
 	
 	create: function(){
+        app.main.game.add.sprite(0, 0, "tankbackground");
 		app.main.graphics = app.main.game.add.graphics(0, 0);
 		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //Tracking the mouse position
+        
+        //particles
+        app.main.bubbleParticles = app.main.game.add.emitter(0, 0, 70);
+        app.main.bubbleParticles.makeParticles("bubble");
+        app.main.bubbleParticles.gravity = -300;
+        app.main.bubbleParticles.maxParticleSpeed.set(0, 10);
+        app.main.bubbleParticles.setRotation(0, 0);
+        app.main.bubbleParticles.setScale(.5, .5);
         
         //music
 		app.main.music = this.sound.play('back');
@@ -39,6 +52,7 @@ var gameState = {
         app.main.poopGroup = app.main.game.add.group();
         app.main.poopGroup.enableBody = true;
         app.main.poopGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
         
         //initializing the fish
         app.main.fishArr.push(app.main.fishGroup.create(0, 0));
@@ -72,7 +86,6 @@ var gameState = {
 	//method to display all of the objects
     displayAll: function(){
             app.main.graphics.clear();
-            app.main.graphics.beginFill(0xAADDFF);
             app.main.graphics.lineStyle(5, 0x000000, 1);
             app.main.graphics.drawRect(0, 0, 800, 600);
             for(var i=0; i<app.main.puddles.length; i++)
@@ -91,13 +104,9 @@ var gameState = {
             {
                 app.main.fishArr[i].display();
             }
-            for(var i=0; i<app.main.poop.length; i++)
-            {
-                app.main.poop[i].display();
-            }
-            // for(var i=0; i<app.main.poopGroup.children.length; i++)
+            // for(var i=0; i<app.main.poop.length; i++)
             // {
-            //     app.main.poopGroup.children[i].display();
+            //     app.main.poop[i].display();
             // }
         },
         
@@ -109,13 +118,20 @@ var gameState = {
                 {
                     if(app.main.game.physics.arcade.collide(app.main.fishArr[j], app.main.food[i]))
                     {
+                        //particle
+                        app.main.bubbleParticles.x = app.main.food[i].x;
+                        app.main.bubbleParticles.y = app.main.food[i].y;
+                        app.main.bubbleParticles.start(true, 5000, null, 7);
+                        //removing food
                         app.main.food.splice(i, 1);
+                        //fish grows
                         app.main.fishArr[j].width++;
                         app.main.fishArr[j].body.width++;
                         app.main.fishArr[j].height++;
                         app.main.fishArr[j].body.height++;
                         app.main.foodEat = app.main.game.sound.play('foodEat');
                         app.main.foodEat.volume -= 0.3;
+                        
                     }
                 }
             }
@@ -149,7 +165,6 @@ var gameState = {
         click: function(){
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
-                console.log("1");
                 app.main.isMouseDown = true;
                 app.main.foodPlop = app.main.game.sound.play('foodPlop');
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));

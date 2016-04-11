@@ -18,6 +18,7 @@ app.main = {
 	foodPlop: undefined,
 	foodGroup: undefined,
 	fishGroup: undefined,
+	bubbleParticles: undefined,
 	size : 1, 
 	money: 0,
 	text: undefined,
@@ -53,6 +54,7 @@ app.main = {
 		thisPoop.cleanPoop = function(){
 			if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
 			{
+				app.main.poop[thisPoop.arrIndex].destroy();
 				app.main.poop.splice(thisPoop.arrIndex, 1);
 				for(var i=thisPoop.arrIndex; i<app.main.poop.length; i++)
 				{
@@ -105,13 +107,25 @@ app.main = {
 			thisFish.body.velocity = Phaser.Point.add(thisFish.body.velocity, thisFish.body.acceleration);
 			if(Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 10 && app.main.food.length > 0)
 			{
+				//particle
+				app.main.bubbleParticles.x = app.main.food[0].x;
+				app.main.bubbleParticles.y = app.main.food[0].y;
+				app.main.bubbleParticles.start(true, 5000, null, 7);
+				//removing food
 				app.main.food.splice(0, 1);
+				//fish grows
+				app.main.fishArr[0].width++;
+				app.main.fishArr[0].body.width++;
+				app.main.fishArr[0].height++;
+				app.main.fishArr[0].body.height++;
+				app.main.foodEat = app.main.game.sound.play('foodEat');
+				app.main.foodEat.volume -= 0.3;
 			}
 		}
 		
 		//The fish takes a poop every 4 seconds where it currently is
 		thisFish.takeAPoop = function(){
-			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y));
+			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
 			app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
 			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
 		}
