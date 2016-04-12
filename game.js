@@ -162,7 +162,7 @@ var gameState = {
                         //fish grows
                         app.main.fishArr[j].width++;
                         app.main.fishArr[j].body.width++;
-                        app.main.fishArr[j].height++;
+                        app.main.fishArr[j].height = app.main.fishArr[j].width * (12/7);
                         app.main.fishArr[j].body.height++;
                         if(app.main.soundEffectsOn)
                         {
