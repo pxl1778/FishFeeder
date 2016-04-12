@@ -33,7 +33,7 @@ app.main = {
 		//  'active' means all requested fonts have finished loading
 		//  We set a 1 second delay before calling 'createText'.
 		//  For some reason if we don't the browser cannot render the text the first time it's created.
-		active: function() { game.time.events.add(Phaser.Timer.SECOND, this); },
+		active: function() { this.game.time.events.add(Phaser.Timer.SECOND, this); },
 	
 		//  The Google Fonts we want to load (specify as many as you like in the array)
 		google: {
@@ -113,7 +113,7 @@ app.main = {
 			thisFish.applyForce();
 			thisFish.body.velocity = Phaser.Point.add(thisFish.body.velocity, thisFish.body.acceleration);
 			thisFish.angle = (Math.atan2(thisFish.body.velocity.y, thisFish.body.velocity.x)*180/Math.PI) + 90;
-			if(Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 10 && app.main.food.length > 0)
+			if(Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < thisFish.height && app.main.food.length > 0)
 			{
 				//particle
 				app.main.bubbleParticles.x = app.main.food[0].x;
@@ -150,7 +150,7 @@ app.main = {
 			{
 				thisFish.seekTarget = app.main.food[0].position;
 			}
-			else if (Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 25)
+			else if (Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < thisFish.height)
 			{
 				thisFish.seekTarget = new Phaser.Point(Math.floor(Math.random() * 800), Math.floor(Math.random() * 600));
 			}

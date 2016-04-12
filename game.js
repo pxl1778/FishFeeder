@@ -13,6 +13,8 @@ var gameState = {
         app.main.game.load.image("food", "images/food.png");
         app.main.game.load.spritesheet("fish", "images/fish1spritesheet.png", 70, 120, 5);
         app.main.game.load.image("store", "images/store.png");
+        app.main.game.load.image("storebutton", "images/storeicon.png");
+        app.main.game.load.image("tutorialbutton", "images/tutorialicon.png");
 	},
     created : false,
     bubbleParticles: undefined,
