@@ -1,0 +1,9 @@
+body {
+    font-family: 'Gloria+Hallelujah';
+    font-size: 32px;
+    background-color: #455A64;
+}
+canvas {    margin: auto;   border: 2px #607D8B solid; }
+
+.slider { float: right; margin: 100px 30px 10px 10px;font-size: 20px;}
+.slider {color: #fff;}
