@@ -36,8 +36,6 @@ app.main = {
 		//  We set a 1 second delay before calling 'createText'.
 		//  For some reason if we don't the browser cannot render the text the first time it's created.
 
-		active: function() { game.time.events.add(Phaser.Timer.SECOND, this); },
-
 		active: function() { this.game.time.events.add(Phaser.Timer.SECOND, this); },
 
 	
@@ -205,5 +203,6 @@ function init(){
 	app.main.game.state.add("boot", bootState);
     app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);
-    app.main.game.state.start("boot");
+    app.main.game.state.add("flushed", flushedState);
+    app.main.game.state.start("flushed");
 }

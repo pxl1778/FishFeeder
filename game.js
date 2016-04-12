@@ -15,9 +15,8 @@ var gameState = {
 
         app.main.game.load.image("food", "images/food.png");
         app.main.game.load.spritesheet("fish", "images/fish1spritesheet.png", 70, 120, 5);
-        app.main.game.load.image("store", "images/store.png");
-        app.main.game.load.image("storebutton", "images/storeicon.png");
-        app.main.game.load.image("tutorialbutton", "images/tutorialicon.png");
+        app.main.game.load.image("store", "images/storeicon.png", 100,100);
+        app.main.game.load.image("tutorialbutton", "images/tutorialicon.png", 100,100);
 
 	},
     created : false,
@@ -27,7 +26,8 @@ var gameState = {
         app.main.game.add.sprite(0, 0, "tankbackground");
 		app.main.graphics = app.main.game.add.graphics(0, 0);
 		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //Tracking the mouse position
-        var store = app.main.game.add.sprite(500, 0, "store");
+        var store = app.main.game.add.sprite(690, 10, "store");
+        var tutorialbutton = app.main.game.add.sprite(690, 120,"tutorialbutton");
         
         //particles
         app.main.bubbleParticles = app.main.game.add.emitter(0, 0, 70);
@@ -78,13 +78,13 @@ var gameState = {
         
         
         //store
-
-      
         store.inputEnabled = true;
         store.events.onInputDown.add(storeOpen, this);
        
-        store.inputEnabled = true;
-        store.events.onInputDown.add(storeOpen, this);
+		//instructions
+		tutorialbutton.inputEnabled = true;
+        tutorialbutton.events.onInputDown.add(tutorialScreen, this);
+
 	},
 	
 	update: function(){
@@ -225,23 +225,10 @@ function storeOpen(item) {
    		app.main.graphicOverlay = new Phaser.Graphics(this.game, 0 , 0);
    		
    		app.main.graphicOverlay.beginFill(0x000000, 0.7);
-   		app.main.graphicOverlay.drawRect(0,0, 600, 800);
+   		app.main.graphicOverlay.drawRect(0,0, 650, 800);
    		app.main.graphicOverlay.endFill();
    		
    		
-   		this.overlay = this.game.add.image(-10,-10,app.main.graphicOverlay.generateTexture());
-   		this.overlay.inputEnabled = true;
-   	
-   	
-   
-   	app.main.overlay = true;
-   	
-   	//app.main.game.physics.arcade.isPaused;
-   	
-   		app.main.graphicOverlay = new Phaser.Graphics(this.game, 0 , 0);
-   		app.main.graphicOverlay.beginFill(0x000000, 0.7);
-   		app.main.graphicOverlay.drawRect(0,0, 600, 800);
-   		app.main.graphicOverlay.endFill();
    		this.overlay = this.game.add.image(-10,-10,app.main.graphicOverlay.generateTexture());
    		this.overlay.inputEnabled = true;
    	
@@ -278,4 +265,9 @@ function out(item) {
 
     item.fill = "#ffffff";
 
+}
+
+function tutorialScreen(item){
+	item =  app.main.game.state.start("tutorial");
+	console.log("hi)");
 }

@@ -11,7 +11,7 @@ var bootState = {
 		app.main.game.physics.startSystem(Phaser.Physics.Arcade);
 		
 				
-	 app.main.game.stage.backgroundColor = "0xAADDFF";
+		app.main.game.stage.backgroundColor = "0xAADDFF";
 		
 	var loadingTitle = app.main.game.add.text(400, 200, "Welcome to Aquatic Parenting!");
 		loadingTitle.anchor.set(.5);
