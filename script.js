@@ -70,7 +70,23 @@ app.main = {
 				{
 					app.main.poop[i].arrIndex --;
 				}
-				app.main.money ++;
+				//balancing how much money depending on food
+				if(app.main.foodType == "food1")
+				{
+					app.main.money ++;
+				}
+				if(app.main.foodType == "food2")
+				{
+					app.main.money += 5;
+				}
+				if(app.main.foodType == "food3")
+				{
+					app.main.money += 20;
+				}
+				if(app.main.foodType == "food4")
+				{
+					app.main.money += 100;
+				}
 			}
 			app.main.isMouseDown = true;
 			

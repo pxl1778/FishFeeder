@@ -110,6 +110,10 @@ var gameState = {
                 app.main.size = Math.floor(app.main.fishArr[0].width) /10; //Updating the size of the fish
             }
             app.main.text.setText("Fish size: " + app.main.size +"cm\nMoney: " + app.main.money);
+            if(app.main.size < 1 || app.main.size > 10)
+            {
+                app.main.game.state.start("flushed");
+            }
         }
 	},
 	
