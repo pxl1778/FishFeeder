@@ -10,7 +10,15 @@ var gameState = {
         app.main.game.load.image("tankbackground", "images/FishTank.png");
         app.main.game.load.image("bubble", "images/bubble.png");
         app.main.game.load.image("poop", "images/poop.png");
+
         app.main.game.load.image("store", "images/store.png");
+
+        app.main.game.load.image("food", "images/food.png");
+        app.main.game.load.spritesheet("fish", "images/fish1spritesheet.png", 70, 120, 5);
+        app.main.game.load.image("store", "images/store.png");
+        app.main.game.load.image("storebutton", "images/storeicon.png");
+        app.main.game.load.image("tutorialbutton", "images/tutorialicon.png");
+
 	},
     created : false,
     bubbleParticles: undefined,
@@ -58,7 +66,10 @@ var gameState = {
         
         
         //initializing the fish
-        app.main.fishArr.push(app.main.fishGroup.create(0, 0));
+        app.main.fishArr.push(app.main.fishGroup.create(0, 0, "fish"));
+        app.main.fishArr[0].animations.add("swim");
+        app.main.fishArr[0].play("swim", 10, true);
+        app.main.fishArr[0].anchor.setTo(.5, .5);
         for(var i=0; i<app.main.fishArr.length; i++)
         {
             app.main.initializeFish(app.main.fishArr[i]);
@@ -67,10 +78,13 @@ var gameState = {
         
         
         //store
+
       
         store.inputEnabled = true;
         store.events.onInputDown.add(storeOpen, this);
        
+        store.inputEnabled = true;
+        store.events.onInputDown.add(storeOpen, this);
 	},
 	
 	update: function(){
@@ -108,14 +122,14 @@ var gameState = {
             {
                 app.main.circles[i].display();
             }
-            for(var i=0; i<app.main.food.length; i++)
-            {
-                app.main.food[i].display();
-            }
-            for(var i=0; i<app.main.fishArr.length; i++)
-            {
-                app.main.fishArr[i].display();
-            }
+            // for(var i=0; i<app.main.food.length; i++)
+            // {
+            //     app.main.food[i].display();
+            // }
+            // for(var i=0; i<app.main.fishArr.length; i++)
+            // {
+            //     app.main.fishArr[i].display();
+            // }
             // for(var i=0; i<app.main.poop.length; i++)
             // {
             //     app.main.poop[i].display();
@@ -135,13 +149,17 @@ var gameState = {
                         app.main.bubbleParticles.y = app.main.food[i].y;
                         app.main.bubbleParticles.start(true, 5000, null, 7);
                         //removing food
+                        app.main.food[i].destroy();
                         app.main.food.splice(i, 1);
                         //fish grows
                         app.main.fishArr[j].width++;
                         app.main.fishArr[j].body.width++;
                         app.main.fishArr[j].height++;
                         app.main.fishArr[j].body.height++;
-                        app.main.foodEat = app.main.game.sound.play('foodEat');
+                        if(app.main.soundEffectsOn)
+                        {
+                            app.main.foodEat = app.main.game.sound.play('foodEat');
+                        }
                         app.main.foodEat.volume -= 0.3;
                         
                     }
@@ -181,9 +199,12 @@ var gameState = {
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
                 app.main.isMouseDown = true;
-                app.main.foodPlop = app.main.game.sound.play('foodPlop');
+                if(app.main.soundEffectsOn)
+                {
+                    app.main.foodPlop = app.main.game.sound.play('foodPlop');                   
+                }
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
-                app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y));
+                app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y, "food"));
                 app.main.initializeFood(app.main.food[app.main.food.length -1], "basic");
                 
             }
@@ -211,6 +232,18 @@ function storeOpen(item) {
    		this.overlay = this.game.add.image(-10,-10,app.main.graphicOverlay.generateTexture());
    		this.overlay.inputEnabled = true;
    	
+   	
+   
+   	app.main.overlay = true;
+   	
+   	//app.main.game.physics.arcade.isPaused;
+   	
+   		app.main.graphicOverlay = new Phaser.Graphics(this.game, 0 , 0);
+   		app.main.graphicOverlay.beginFill(0x000000, 0.7);
+   		app.main.graphicOverlay.drawRect(0,0, 600, 800);
+   		app.main.graphicOverlay.endFill();
+   		this.overlay = this.game.add.image(-10,-10,app.main.graphicOverlay.generateTexture());
+   		this.overlay.inputEnabled = true;
    	
    		app.main.xClose = app.main.game.add.text(50, 50, "X");
    		app.main.xClose.anchor.set(.5);
