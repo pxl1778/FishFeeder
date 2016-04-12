@@ -30,6 +30,8 @@ app.main = {
 	foodType: "food1",
 	closeTut: undefined,
 	tutback: undefined,
+	storeArr: [false, false, false, false, false, false],
+	storePics: [],
 
 	clickedStore: false,
 
@@ -129,7 +131,6 @@ app.main = {
 		
 		//updates the physics and forces
 		thisFish.update = function(){
-			if(app.main.overlay ==false){
 			thisFish.body.acceleration = new Phaser.Point(0, 0);
 			thisFish.seek();
 			thisFish.applyForce();
@@ -153,31 +154,32 @@ app.main = {
 				app.main.foodEat.volume -= 0.3;
 			}
 		}
-		}
 		
 		//periodically shrinks the fish
 		thisFish.shrink = function(){
-			thisFish.width --;
-			thisFish.height = thisFish.width * (12/7);
-			app.main.game.time.events.add(Phaser.Timer.SECOND, thisFish.shrink, this);
+			if(!app.main.overlay)
+			{
+				thisFish.width --;
+				thisFish.height = thisFish.width * (12/7);
+			}
+			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.shrink, this);
 		}
 		
 		//The fish takes a poop every 4 seconds where it currently is
 		thisFish.takeAPoop = function(){
 			if(app.main.overlay ==false)
 			{
-			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
-			app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
-			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
+				app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
+				app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
 			}
+			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
 		}
 		//starting the pooping
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
-		app.main.game.time.events.add(Phaser.Timer.SECOND, thisFish.shrink, this);
+		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.shrink, this);
 		//adds forces to move towards the seekTarget
 		thisFish.seek = function(){
-			if(app.main.overlay ==false){
-			if(app.main.food.length > 0) //making sure there isn't an undefined target
+			if(app.main.food.length > 0 && !app.main.overlay) //making sure there isn't an undefined target
 			{
 				thisFish.seekTarget = app.main.food[0].position;
 			}
@@ -188,7 +190,7 @@ app.main = {
 			var temp = Phaser.Point.subtract(thisFish.seekTarget, thisFish.body.position);
 			temp.clamp(-thisFish.maxForce, thisFish.maxForce);
 			thisFish.seekForce = Phaser.Point.subtract(temp, thisFish.body.velocity);
-		}
+		
 		
 		//applies forces to the fish
 		thisFish.applyForce = function(){
