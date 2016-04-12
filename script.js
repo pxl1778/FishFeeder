@@ -29,6 +29,7 @@ app.main = {
 	xClose:undefined,
 	foodType: "food1",
 	closeTut: undefined,
+	tutback: undefined,
 
 	clickedStore: false,
 

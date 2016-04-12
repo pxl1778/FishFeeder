@@ -202,7 +202,7 @@ var gameState = {
         
         //Called every frame, checks if the player is clicking to leave food.
         click: function(){
-	        if(app.main.overlay ==false){
+	        if(app.main.overlay == false){
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
                 app.main.isMouseDown = true;
@@ -358,6 +358,7 @@ function storeClose(item) {
    	app.main.overlay = false;
     app.main.game.time.events.add(Phaser.Timer.SECOND * 4, app.main.fishArr[0].takeAPoop, this);
    	app.main.clickedStore = false;
+    app.main.isMouseDown = true;
 }
 
 function over(item) {
@@ -373,16 +374,16 @@ function out(item) {
 }
 
 function tutorialScreen(item){
-	item =  app.main.game.state.start("tutorial");
+	//item =  app.main.game.state.start("tutorial");
 	
-	/*
-app.main.tutbackground = new Phaser.Graphics(this.game, 0 , 0);
+	
+//app.main.tutbackground = new Phaser.Graphics(this.game, 0 , 0);
 	//app.main.tutbackground = app.main.game.add.graphics(0, 0);
-	var tutback = app.main.game.add.sprite(0, 0, "tutbackground");
+	app.main.tutback = app.main.game.add.sprite(0, 0, "tutbackground");
 	app.main.closeTut = app.main.game.add.text(755, 580, "close");
 	
 	//this.tutback = this.game.add.image(-10,-10, app.main.tutbackground.generateTexture());
-   	this.tutback.inputEnabled = true;
+   	app.main.tutback.inputEnabled = true;
    	
    	//exit button to leave menu and return to game	
    	app.main.closeTut.anchor.set(.5);
@@ -394,14 +395,16 @@ app.main.tutbackground = new Phaser.Graphics(this.game, 0 , 0);
 	app.main.closeTut.events.onInputOver.add(over, this);
 	app.main.closeTut.events.onInputOut.add(out, this);
 	app.main.closeTut.events.onInputDown.add(exitTut, this);
-*/
-	
+    app.main.overlay = true;
 }
 
 function exitTut(item)
 {
-	this.tutback.destroy();
+    app.main.isMouseDown = true;
+	app.main.tutback.destroy();
 	app.main.closeTut.destroy();
+	
+	app.main.overlay = false;
 	
 }
 
