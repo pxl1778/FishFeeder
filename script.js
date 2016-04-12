@@ -27,6 +27,7 @@ app.main = {
 	pause: false,
 	graphicOverlay: undefined,
 	xClose:undefined,
+	foodType: "food1",
 
 	clickedStore: false,
 
@@ -37,7 +38,6 @@ app.main = {
 		//  For some reason if we don't the browser cannot render the text the first time it's created.
 
 		active: function() { this.game.time.events.add(Phaser.Timer.SECOND, this); },
-
 	
 		//  The Google Fonts we want to load (specify as many as you like in the array)
 		google: {
@@ -139,14 +139,14 @@ app.main = {
 		
 		//The fish takes a poop every 4 seconds where it currently is
 		thisFish.takeAPoop = function(){
-			if(app.main.overlay ==false){
+			if(app.main.overlay ==false)
+			{
 			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
 			app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
 			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
-			
+			}
 		}
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
-		}
 		//adds forces to move towards the seekTarget
 		thisFish.seek = function(){
 			if(app.main.overlay ==false){

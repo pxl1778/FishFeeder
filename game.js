@@ -11,12 +11,16 @@ var gameState = {
         app.main.game.load.image("bubble", "images/bubble.png");
         app.main.game.load.image("poop", "images/poop.png");
 
-        app.main.game.load.image("store", "images/store.png");
-
-        app.main.game.load.image("food", "images/food.png");
-        app.main.game.load.spritesheet("fish", "images/fish1spritesheet.png", 70, 120, 5);
         app.main.game.load.image("store", "images/storeicon.png", 100,100);
         app.main.game.load.image("tutorialbutton", "images/tutorialicon.png", 100,100);
+        app.main.game.load.image("food1", "images/food1.png");
+        app.main.game.load.image("food2", "images/food2.png");
+        app.main.game.load.image("food3", "images/food3.png");
+        app.main.game.load.image("food4", "images/food4.png");
+        app.main.game.load.spritesheet("fish1", "images/fish1spritesheet.png", 70, 120, 5);
+        app.main.game.load.spritesheet("fish2", "images/fish2spritesheet.png", 70, 120, 5);
+        app.main.game.load.spritesheet("fish3", "images/fish3spritesheet.png", 70, 120, 5);
+        app.main.game.load.spritesheet("fish4", "images/fish4spritesheet.png", 70, 120, 5);
 
 	},
     created : false,
@@ -66,7 +70,7 @@ var gameState = {
         
         
         //initializing the fish
-        app.main.fishArr.push(app.main.fishGroup.create(0, 0, "fish"));
+        app.main.fishArr.push(app.main.fishGroup.create(0, 0, "fish1"));
         app.main.fishArr[0].animations.add("swim");
         app.main.fishArr[0].play("swim", 10, true);
         app.main.fishArr[0].anchor.setTo(.5, .5);
@@ -103,7 +107,7 @@ var gameState = {
             app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //recording the moues pos
             if(app.main.fishArr.length > 0)
             {
-                app.main.size = app.main.fishArr[0].width /10; //Updating the size of the fish
+                app.main.size = Math.floor(app.main.fishArr[0].width) /10; //Updating the size of the fish
             }
             app.main.text.setText("Fish size: " + app.main.size +"cm\nMoney: " + app.main.money);
         }
@@ -167,8 +171,6 @@ var gameState = {
             }
         },
         
-    
-        
         //Draws puddles on the screen when the mouse moves
         manageCircles: function(){
             for(var i=0; i<app.main.circles.length; i++)
@@ -204,7 +206,7 @@ var gameState = {
                     app.main.foodPlop = app.main.game.sound.play('foodPlop');                   
                 }
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
-                app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y, "food"));
+                app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y, app.main.foodType));
                 app.main.initializeFood(app.main.food[app.main.food.length -1], "basic");
                 
             }
@@ -252,6 +254,7 @@ function storeClose(item) {
    	this.overlay.destroy();
    	app.main.xClose.destroy();
    	app.main.overlay = false;
+    app.main.game.time.events.add(Phaser.Timer.SECOND * 4, app.main.fishArr[0].takeAPoop, this);
    	app.main.clickedStore = false;
 }
 
