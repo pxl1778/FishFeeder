@@ -227,6 +227,17 @@ app.main = {
 }
 
 function init(){
+	//Adding volume slider
+	document.getElementById("audioVol").onchange = function(e){
+		app.main.game.sound.volume = e.target.value;
+		document.getElementById("audioVolSpan").innerHTML = e.target.value;
+	};
+	
+	//Adding Sound Effects toggle
+	document.getElementById("soundEffects").onchange = function(e){
+		app.main.soundEffectsOn = e.target.checked;
+	};
+	
     app.main.game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 	
 	app.main.game.state.add("boot", bootState);

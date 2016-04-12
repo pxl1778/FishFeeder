@@ -4,8 +4,25 @@ body {
 
     background-color: #455A64;
 }
+
+h1{
+    font-family: 'Gloria+Hallelujah';
+    font-size: 32px;
+    margin: auto;
+    margin-left: 50%;
+}
 canvas {    margin: auto;   border: 2px #607D8B solid; }
 
-.slider { float: right; margin: 100px 30px 10px 10px;font-size: 20px;}
-.slider {color: #fff;}
+.slider { float: left; margin: auto; margin-right: 10px;}
+
+#checkbox{
+    float:left;
+    margin: auto;
+}
+
+#controls{
+    margin: auto;
+    color: #fff;
+    font-size: 20px;
+}
 
