@@ -4,7 +4,6 @@ var app = app || {};
 var bootState = {
 	preload: function() {
 		app.main.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-			console.log("Font loadted");
 	},
 	
 	create: function(){
@@ -24,7 +23,6 @@ var bootState = {
         playGame.font = 'Gloria Hallelujah';
         playGame.fontSize = 30;
         playGame.fill = '#fff';
-        console.log("font" + playGame.font);
         
     var tutorialScreen = app.main.game.add.text(400, 450, "Parent Handbook");
 		tutorialScreen.anchor.set(.5);
