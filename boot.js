@@ -4,13 +4,18 @@ var app = app || {};
 var bootState = {
 	preload: function() {
 		app.main.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+	
+        app.main.game.load.image("titlebackground", "images/titlebackground.png");
 	},
 	
 	create: function(){
 		app.main.game.physics.startSystem(Phaser.Physics.Arcade);
 		
 				
-		app.main.game.stage.backgroundColor = "0xAADDFF";
+		//app.main.game.stage.backgroundColor = "0xAADDFF";
+		
+		app.main.game.add.sprite(0, 0, "titlebackground");
+		app.main.graphics = app.main.game.add.graphics(0, 0);
 		
 	var loadingTitle = app.main.game.add.text(400, 200, "Welcome to Aquatic Parenting!");
 		loadingTitle.anchor.set(.5);
