@@ -14,8 +14,8 @@ var gameState = {
 
         app.main.game.load.image("store", "images/storeicon.png", 100,100);
         app.main.game.load.image("tutorialbutton", "images/tutorialicon.png", 100,100);
-        app.main.game.load.image("food1", "images/food1.png");
-        app.main.game.load.image("food2", "images/food2.png");
+        app.main.game.load.image("food1", "images/food1.png", 100,100);
+        app.main.game.load.image("food2", "images/food2.png",100,100);
         app.main.game.load.image("food3", "images/food3.png");
         app.main.game.load.image("food4", "images/food4.png");
         app.main.game.load.spritesheet("fish1", "images/fish1spritesheet.png", 70, 120, 5);
@@ -249,6 +249,96 @@ function storeOpen(item) {
 		app.main.xClose.events.onInputOver.add(over, this);
 		app.main.xClose.events.onInputOut.add(out, this);
 		app.main.xClose.events.onInputDown.add(storeClose, this);
+		
+		
+		//Fist food information in the store
+		var food2 = app.main.game.add.image(50, 100, 'food2');
+		
+		app.main.foodtwo = app.main.game.add.text(100, 250, "Cost: $10");
+   		app.main.foodtwo.anchor.set(.5);
+        app.main.foodtwo.font = "Gloria Hallelujah";
+        app.main.foodtwo.fontSize = 20;
+        app.main.foodtwo.fill = '#fff';
+        
+        app.main.foodtwo.inputEnabled = true;
+		app.main.foodtwo.events.onInputOver.add(over, this);
+		app.main.foodtwo.events.onInputOut.add(out, this);
+		app.main.foodtwo.events.onInputDown.add(foodTwo, this);
+
+		//second food option in the store
+		var food3 = app.main.game.add.image(250, 100, 'food3');
+		
+		app.main.foodthree = app.main.game.add.text(300, 250, "Cost: $50");
+   		app.main.foodthree.anchor.set(.5);
+        app.main.foodthree.font = "Gloria Hallelujah";
+        app.main.foodthree.fontSize = 20;
+        app.main.foodthree.fill = '#fff';
+        
+        app.main.foodthree.inputEnabled = true;
+		app.main.foodthree.events.onInputOver.add(over, this);
+		app.main.foodthree.events.onInputOut.add(out, this);
+		app.main.foodthree.events.onInputDown.add(foodThree, this);
+
+
+		//fourth food option in the store
+		var food4 = app.main.game.add.image(450, 100, 'food4');
+		
+		app.main.foodfour = app.main.game.add.text(500, 250, "Cost: $200");
+   		app.main.foodfour.anchor.set(.5);
+        app.main.foodfour.font = "Gloria Hallelujah";
+        app.main.foodfour.fontSize = 20;
+        app.main.foodfour.fill = '#fff';
+        
+        app.main.foodfour.inputEnabled = true;
+		app.main.foodfour.events.onInputOver.add(over, this);
+		app.main.foodfour.events.onInputOut.add(out, this);
+		app.main.foodfour.events.onInputDown.add(foodFour, this);
+
+		
+		
+		
+		//First fish option in the store
+		var fish2 = app.main.game.add.image(50, 350, 'fish2');
+		
+		app.main.fishtwo = app.main.game.add.text(100, 500, "Cost: $50");
+   		app.main.fishtwo.anchor.set(.5);
+        app.main.fishtwo.font = "Gloria Hallelujah";
+        app.main.fishtwo.fontSize = 20;
+        app.main.fishtwo.fill = '#fff';
+        
+        app.main.fishtwo.inputEnabled = true;
+		app.main.fishtwo.events.onInputOver.add(over, this);
+		app.main.fishtwo.events.onInputOut.add(out, this);
+		app.main.fishtwo.events.onInputDown.add(fishTwo, this);
+		
+		
+		
+		var fish3 = app.main.game.add.image(250, 350, 'fish3');
+			
+		app.main.fishthree = app.main.game.add.text(300, 500, "Cost: $200");
+   		app.main.fishthree.anchor.set(.5);
+        app.main.fishthree.font = "Gloria Hallelujah";
+        app.main.fishthree.fontSize = 20;
+        app.main.fishthree.fill = '#fff';
+        
+        app.main.fishthree.inputEnabled = true;
+		app.main.fishthree.events.onInputOver.add(over, this);
+		app.main.fishthree.events.onInputOut.add(out, this);
+		app.main.fishthree.events.onInputDown.add(fishThree, this);
+		
+		
+		var fish4 = app.main.game.add.image(450, 350, 'fish4');
+		app.main.fishfour = app.main.game.add.text(500, 500, "Cost: $1000");
+   		app.main.fishfour.anchor.set(.5);
+        app.main.fishfour.font = "Gloria Hallelujah";
+        app.main.fishfour.fontSize = 20;
+        app.main.fishfour.fill = '#fff';
+        
+        app.main.fishfour.inputEnabled = true;
+		app.main.fishfour.events.onInputOver.add(over, this);
+		app.main.fishfour.events.onInputOut.add(out, this);
+		app.main.fishfour.events.onInputDown.add(fishFour, this);
+		
 		}
 		app.main.clickedStore = true;
  }
@@ -258,6 +348,13 @@ function storeClose(item) {
 	
    	this.overlay.destroy();
    	app.main.xClose.destroy();
+   	app.main.foodtwo.destroy();
+   	app.main.foodthree.destroy();
+   	app.main.foodfour.destroy();
+   	app.main.fishtwo.destroy();
+   	app.main.fishthree.destroy();
+   	app.main.fishfour.destroy();
+   	   	
    	app.main.overlay = false;
     app.main.game.time.events.add(Phaser.Timer.SECOND * 4, app.main.fishArr[0].takeAPoop, this);
    	app.main.clickedStore = false;
@@ -305,5 +402,37 @@ function exitTut(item)
 {
 	this.tutback.destroy();
 	app.main.closeTut.destroy();
+	
+}
+
+function foodTwo(item){
+	
+}
+
+
+function foodThree(item){
+	
+}
+
+
+function foodFour(item){
+	
+}
+
+
+
+function fishTwo(item){
+	
+	}
+	
+	
+
+function fishThree(item){
+	
+	
+}
+
+
+function fishFour(item){
 	
 }
