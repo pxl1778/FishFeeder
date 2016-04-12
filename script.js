@@ -71,7 +71,23 @@ app.main = {
 				{
 					app.main.poop[i].arrIndex --;
 				}
-				app.main.money ++;
+				//balancing how much money depending on food
+				if(app.main.foodType == "food1")
+				{
+					app.main.money ++;
+				}
+				if(app.main.foodType == "food2")
+				{
+					app.main.money += 5;
+				}
+				if(app.main.foodType == "food3")
+				{
+					app.main.money += 20;
+				}
+				if(app.main.foodType == "food4")
+				{
+					app.main.money += 100;
+				}
 			}
 			app.main.isMouseDown = true;
 			
@@ -130,12 +146,19 @@ app.main = {
 				//fish grows
 				app.main.fishArr[0].width++;
 				app.main.fishArr[0].body.width++;
-				app.main.fishArr[0].height++;
+				app.main.fishArr[0].height = app.main.fishArr[0].width * (12/7);
 				app.main.fishArr[0].body.height++;
 				app.main.foodEat = app.main.game.sound.play('foodEat');
 				app.main.foodEat.volume -= 0.3;
 			}
 		}
+		}
+		
+		//periodically shrinks the fish
+		thisFish.shrink = function(){
+			thisFish.width --;
+			thisFish.height = thisFish.width * (12/7);
+			app.main.game.time.events.add(Phaser.Timer.SECOND * 3, thisFish.shrink, this);
 		}
 		
 		//The fish takes a poop every 4 seconds where it currently is
@@ -147,7 +170,9 @@ app.main = {
 			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
 			}
 		}
+		//starting the pooping
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
+		app.main.game.time.events.add(Phaser.Timer.SECOND * 3, thisFish.shrink, this);
 		//adds forces to move towards the seekTarget
 		thisFish.seek = function(){
 			if(app.main.overlay ==false){
