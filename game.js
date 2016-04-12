@@ -21,6 +21,7 @@ var gameState = {
         app.main.game.load.image("store", "images/store.png");
         app.main.game.load.image("storebutton", "images/storeicon.png");
         app.main.game.load.image("tutorialbutton", "images/tutorialicon.png");
+
 	},
     created : false,
     bubbleParticles: undefined,
@@ -47,7 +48,7 @@ var gameState = {
         
         //On screen text
         // var style = { font: "30px Gloria Hallelujah", fill: "#fff", align: "left"};
-        app.main.text = app.main.game.add.text(120, 30, "Fish size: " + "cm");
+        app.main.text = app.main.game.add.text(120, 50, "Fish size: " + "cm");
         
         app.main.text.anchor.set(.5);
         app.main.text.font = "Gloria Hallelujah";
@@ -80,6 +81,11 @@ var gameState = {
         
         
         //store
+
+      
+        store.inputEnabled = true;
+        store.events.onInputDown.add(storeOpen, this);
+       
         store.inputEnabled = true;
         store.events.onInputDown.add(storeOpen, this);
 	},
@@ -214,6 +220,20 @@ var gameState = {
 }
 
 function storeOpen(item) {
+   	if(app.main.clickedStore == false){
+   		app.main.overlay = true;
+   	   
+   		app.main.graphicOverlay = new Phaser.Graphics(this.game, 0 , 0);
+   		
+   		app.main.graphicOverlay.beginFill(0x000000, 0.7);
+   		app.main.graphicOverlay.drawRect(0,0, 600, 800);
+   		app.main.graphicOverlay.endFill();
+   		
+   		
+   		this.overlay = this.game.add.image(-10,-10,app.main.graphicOverlay.generateTexture());
+   		this.overlay.inputEnabled = true;
+   	
+   	
    
    	app.main.overlay = true;
    	
@@ -236,6 +256,8 @@ function storeOpen(item) {
 		app.main.xClose.events.onInputOver.add(over, this);
 		app.main.xClose.events.onInputOut.add(out, this);
 		app.main.xClose.events.onInputDown.add(storeClose, this);
+		}
+		app.main.clickedStore = true;
  }
 
 
@@ -245,6 +267,7 @@ function storeClose(item) {
    	app.main.xClose.destroy();
    	app.main.overlay = false;
     app.main.game.time.events.add(Phaser.Timer.SECOND * 4, app.main.fishArr[0].takeAPoop, this);
+   	app.main.clickedStore = false;
 }
 
 function over(item) {
