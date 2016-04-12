@@ -51,13 +51,13 @@ function out(item) {
 
 }
 
-function reboot(item) {
+function reboot() {
    
-     item =  app.main.game.state.start("boot");
+     app.main.game.state.start("boot");
 
 }
 
-function restart(item)
+function restart()
 {
-	item =  app.main.game.state.start("game");
+	app.main.game.state.start("game");
 }

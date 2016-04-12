@@ -2,7 +2,7 @@
 var app = app || {};
 
 var gameState = {
-	
+    created : false,
 	preload: function(){
 		app.main.game.load.audio('back', 'audio/background.mp3');
 		app.main.game.load.audio('foodEat', 'audio/snap.mp3');
@@ -22,9 +22,8 @@ var gameState = {
         app.main.game.load.spritesheet("fish2", "images/fish2spritesheet.png", 70, 120, 5);
         app.main.game.load.spritesheet("fish3", "images/fish3spritesheet.png", 70, 120, 5);
         app.main.game.load.spritesheet("fish4", "images/fish4spritesheet.png", 70, 120, 5);
-
+        this.created = false;
 	},
-    created : false,
     bubbleParticles: undefined,
 	
 	create: function(){
@@ -89,7 +88,8 @@ var gameState = {
 		//instructions
 		tutorialbutton.inputEnabled = true;
         tutorialbutton.events.onInputDown.add(tutorialScreen, this);
-
+        
+        console.log("created");
 	},
 	
 	update: function(){

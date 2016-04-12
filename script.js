@@ -159,7 +159,7 @@ app.main = {
 		thisFish.shrink = function(){
 			thisFish.width --;
 			thisFish.height = thisFish.width * (12/7);
-			app.main.game.time.events.add(Phaser.Timer.SECOND * 3, thisFish.shrink, this);
+			app.main.game.time.events.add(Phaser.Timer.SECOND, thisFish.shrink, this);
 		}
 		
 		//The fish takes a poop every 4 seconds where it currently is
@@ -173,7 +173,7 @@ app.main = {
 		}
 		//starting the pooping
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
-		app.main.game.time.events.add(Phaser.Timer.SECOND * 3, thisFish.shrink, this);
+		app.main.game.time.events.add(Phaser.Timer.SECOND, thisFish.shrink, this);
 		//adds forces to move towards the seekTarget
 		thisFish.seek = function(){
 			if(app.main.overlay ==false){
