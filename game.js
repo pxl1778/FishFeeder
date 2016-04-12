@@ -12,6 +12,7 @@ var gameState = {
         app.main.game.load.image("poop", "images/poop.png");
         app.main.game.load.image("food", "images/food.png");
         app.main.game.load.spritesheet("fish", "images/fish1spritesheet.png", 70, 120, 5);
+        app.main.game.load.image("store", "images/store.png");
 	},
     created : false,
     bubbleParticles: undefined,
@@ -20,6 +21,7 @@ var gameState = {
         app.main.game.add.sprite(0, 0, "tankbackground");
 		app.main.graphics = app.main.game.add.graphics(0, 0);
 		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //Tracking the mouse position
+        var store = app.main.game.add.sprite(500, 0, "store");
         
         //particles
         app.main.bubbleParticles = app.main.game.add.emitter(0, 0, 70);
@@ -43,6 +45,7 @@ var gameState = {
         app.main.text.font = "Gloria Hallelujah";
         app.main.text.fontSize = 30;
         app.main.text.fill = '#fff';
+               
 		
         //Setting up physics for game objects
 		app.main.foodGroup = app.main.game.add.group();
@@ -66,6 +69,11 @@ var gameState = {
             app.main.initializeFish(app.main.fishArr[i]);
         }
         this.created = true;
+        
+        
+        //store
+        store.inputEnabled = true;
+        store.events.onInputDown.add(storeOpen, this);
 	},
 	
 	update: function(){
@@ -77,8 +85,10 @@ var gameState = {
             {
                 app.main.fishArr[i].update(); //updating every fish that might be on the screen
             }
+            
             this.checkFoodCollision(); //Checks if the fish has collided with the food
             this.click(); //Checks for clicking to feed the fish
+            
             app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //recording the moues pos
             if(app.main.fishArr.length > 0)
             {
@@ -146,6 +156,8 @@ var gameState = {
             }
         },
         
+    
+        
         //Draws puddles on the screen when the mouse moves
         manageCircles: function(){
             for(var i=0; i<app.main.circles.length; i++)
@@ -172,6 +184,7 @@ var gameState = {
         
         //Called every frame, checks if the player is clicking to leave food.
         click: function(){
+	        if(app.main.overlay ==false){
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
                 app.main.isMouseDown = true;
@@ -182,13 +195,59 @@ var gameState = {
                 app.main.circles.push(new Circle(app.main.game.input.x, app.main.game.input.y, Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70), Math.floor(Math.random() * 186 + 70)));
                 app.main.food.push(app.main.foodGroup.create(app.main.game.input.x, app.main.game.input.y, "food"));
                 app.main.initializeFood(app.main.food[app.main.food.length -1], "basic");
+                
             }
             //Making sure you can only click once.
             if(app.main.game.input.activePointer.isUp)
             {
                 app.main.isMouseDown = false;
             }
-
+		}
 	}
 	
+}
+
+function storeOpen(item) {
+   
+   	app.main.overlay = true;
+   	
+   	//app.main.game.physics.arcade.isPaused;
+   	
+   		app.main.graphicOverlay = new Phaser.Graphics(this.game, 0 , 0);
+   		app.main.graphicOverlay.beginFill(0x000000, 0.7);
+   		app.main.graphicOverlay.drawRect(0,0, 600, 800);
+   		app.main.graphicOverlay.endFill();
+   		this.overlay = this.game.add.image(-10,-10,app.main.graphicOverlay.generateTexture());
+   		this.overlay.inputEnabled = true;
+   	
+   		app.main.xClose = app.main.game.add.text(50, 50, "X");
+   		app.main.xClose.anchor.set(.5);
+        app.main.xClose.font = "Gloria Hallelujah";
+        app.main.xClose.fontSize = 50;
+        app.main.xClose.fill = '#fff';
+        
+        app.main.xClose.inputEnabled = true;
+		app.main.xClose.events.onInputOver.add(over, this);
+		app.main.xClose.events.onInputOut.add(out, this);
+		app.main.xClose.events.onInputDown.add(storeClose, this);
+ }
+
+
+function storeClose(item) {
+	
+   	this.overlay.destroy();
+   	app.main.xClose.destroy();
+   	app.main.overlay = false;
+}
+
+function over(item) {
+
+    item.fill = "#2196F3";
+
+}
+
+function out(item) {
+
+    item.fill = "#ffffff";
+
 }
