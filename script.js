@@ -22,19 +22,24 @@ app.main = {
 	size : 1, 
 	money: 0,
 	text: undefined,
+	overlay: false,
+	pause: false,
+	graphicOverlay: undefined,
+	xClose:undefined,
 
 	WebFontConfig : {
 
 		//  'active' means all requested fonts have finished loading
 		//  We set a 1 second delay before calling 'createText'.
 		//  For some reason if we don't the browser cannot render the text the first time it's created.
-		active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+		active: function() { game.time.events.add(Phaser.Timer.SECOND, this); },
 	
 		//  The Google Fonts we want to load (specify as many as you like in the array)
 		google: {
 		families: ["Gloria Hallelujah"]
 		}
 	},
+
 	
 	//Adds necessary values to the poops
 	initializePoop : function(thisPoop, index)
@@ -101,6 +106,7 @@ app.main = {
 		
 		//updates the physics and forces
 		thisFish.update = function(){
+			if(app.main.overlay ==false){
 			thisFish.body.acceleration = new Phaser.Point(0, 0);
 			thisFish.seek();
 			thisFish.applyForce();
@@ -122,17 +128,21 @@ app.main = {
 				app.main.foodEat.volume -= 0.3;
 			}
 		}
+		}
 		
 		//The fish takes a poop every 4 seconds where it currently is
 		thisFish.takeAPoop = function(){
+			if(app.main.overlay ==false){
 			app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
 			app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
 			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
+			
 		}
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
-		
+		}
 		//adds forces to move towards the seekTarget
 		thisFish.seek = function(){
+			if(app.main.overlay ==false){
 			if(app.main.food.length > 0) //making sure there isn't an undefined target
 			{
 				thisFish.seekTarget = app.main.food[0].position;
@@ -150,7 +160,7 @@ app.main = {
 		thisFish.applyForce = function(){
 			thisFish.body.acceleration = Phaser.Point.add(thisFish.body.acceleration, thisFish.seekForce);
 		}
-			
+		}	
 	},
 	
 	//adds necessary values to the food objects
@@ -182,8 +192,8 @@ app.main = {
 
 function init(){
     app.main.game = new Phaser.Game(800, 600, Phaser.AUTO, '');
-
-    app.main.game.state.add("boot", bootState);
+	
+	app.main.game.state.add("boot", bootState);
     app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);
     app.main.game.state.start("boot");
