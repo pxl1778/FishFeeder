@@ -32,6 +32,13 @@ var bootState = {
         tutorialScreen.fontSize = 30;
 		tutorialScreen.fill = '#fff';
 		
+	var devs = app.main.game.add.text(400, 550, "Peter Lockhart & Sara Artese");
+		devs.anchor.set(.5);
+        devs.font = 'Gloria Hallelujah';
+        devs.fontSize = 20;
+		devs.fill = '#90A4AE';
+
+		
 		// Start parenting hover and change game state
 		playGame.inputEnabled = true;
 		playGame.events.onInputOver.add(over, this);

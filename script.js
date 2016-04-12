@@ -28,6 +28,7 @@ app.main = {
 	graphicOverlay: undefined,
 	xClose:undefined,
 	foodType: "food1",
+	closeTut: undefined,
 
 	clickedStore: false,
 
@@ -204,5 +205,5 @@ function init(){
     app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);
     app.main.game.state.add("flushed", flushedState);
-    app.main.game.state.start("flushed");
+    app.main.game.state.start("boot");
 }

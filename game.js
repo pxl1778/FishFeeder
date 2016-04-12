@@ -10,6 +10,7 @@ var gameState = {
         app.main.game.load.image("tankbackground", "images/FishTank.png");
         app.main.game.load.image("bubble", "images/bubble.png");
         app.main.game.load.image("poop", "images/poop.png");
+        app.main.game.load.image("tutbackground", "images/tutorial.png");
 
         app.main.game.load.image("store", "images/storeicon.png", 100,100);
         app.main.game.load.image("tutorialbutton", "images/tutorialicon.png", 100,100);
@@ -272,5 +273,33 @@ function out(item) {
 
 function tutorialScreen(item){
 	item =  app.main.game.state.start("tutorial");
-	console.log("hi)");
+	
+	/*
+app.main.tutbackground = new Phaser.Graphics(this.game, 0 , 0);
+	//app.main.tutbackground = app.main.game.add.graphics(0, 0);
+	var tutback = app.main.game.add.sprite(0, 0, "tutbackground");
+	app.main.closeTut = app.main.game.add.text(755, 580, "close");
+	
+	//this.tutback = this.game.add.image(-10,-10, app.main.tutbackground.generateTexture());
+   	this.tutback.inputEnabled = true;
+   	
+   	//exit button to leave menu and return to game	
+   	app.main.closeTut.anchor.set(.5);
+    app.main.closeTut.font = "Gloria Hallelujah";
+    app.main.closeTut.fontSize = 35;
+    app.main.closeTut.fill = '#fff';
+        
+    app.main.closeTut.inputEnabled = true;
+	app.main.closeTut.events.onInputOver.add(over, this);
+	app.main.closeTut.events.onInputOut.add(out, this);
+	app.main.closeTut.events.onInputDown.add(exitTut, this);
+*/
+	
+}
+
+function exitTut(item)
+{
+	this.tutback.destroy();
+	app.main.closeTut.destroy();
+	
 }
