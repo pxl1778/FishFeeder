@@ -71,8 +71,8 @@ var gameState = {
         
         //initializing the fish
         app.main.fishArr.push(app.main.fishGroup.create(0, 0, "fish1"));
-        app.main.fishArr[0].animations.add("swim");
-        app.main.fishArr[0].play("swim", 10, true);
+        app.main.fishArr[0].animations.add("swim1");
+        app.main.fishArr[0].play("swim1", 10, true);
         app.main.fishArr[0].anchor.setTo(.5, .5);
         for(var i=0; i<app.main.fishArr.length; i++)
         {
@@ -88,8 +88,6 @@ var gameState = {
 		//instructions
 		tutorialbutton.inputEnabled = true;
         tutorialbutton.events.onInputDown.add(tutorialScreen, this);
-        
-        console.log("created");
 	},
 	
 	update: function(){
@@ -252,7 +250,7 @@ function storeOpen(item) {
 		
 		
 		//Fist food information in the store
-		var food2 = app.main.game.add.image(50, 100, 'food2');
+		app.main.storePics[0] = app.main.game.add.image(50, 100, 'food2');
 		
 		app.main.foodtwo = app.main.game.add.text(100, 250, "Cost: $10");
    		app.main.foodtwo.anchor.set(.5);
@@ -264,9 +262,13 @@ function storeOpen(item) {
 		app.main.foodtwo.events.onInputOver.add(over, this);
 		app.main.foodtwo.events.onInputOut.add(out, this);
 		app.main.foodtwo.events.onInputDown.add(foodTwo, this);
+        if(app.main.storeArr[0])
+        {
+            app.main.foodtwo.setText("Sold");
+        }
 
 		//second food option in the store
-		var food3 = app.main.game.add.image(250, 100, 'food3');
+		app.main.storePics[1] = app.main.game.add.image(250, 100, 'food3');
 		
 		app.main.foodthree = app.main.game.add.text(300, 250, "Cost: $50");
    		app.main.foodthree.anchor.set(.5);
@@ -278,10 +280,13 @@ function storeOpen(item) {
 		app.main.foodthree.events.onInputOver.add(over, this);
 		app.main.foodthree.events.onInputOut.add(out, this);
 		app.main.foodthree.events.onInputDown.add(foodThree, this);
-
+        if(app.main.storeArr[1])
+        {
+            app.main.foodthree.setText("Sold");
+        }
 
 		//fourth food option in the store
-		var food4 = app.main.game.add.image(450, 100, 'food4');
+		app.main.storePics[2] = app.main.game.add.image(450, 100, 'food4');
 		
 		app.main.foodfour = app.main.game.add.text(500, 250, "Cost: $200");
    		app.main.foodfour.anchor.set(.5);
@@ -293,12 +298,15 @@ function storeOpen(item) {
 		app.main.foodfour.events.onInputOver.add(over, this);
 		app.main.foodfour.events.onInputOut.add(out, this);
 		app.main.foodfour.events.onInputDown.add(foodFour, this);
-
+        if(app.main.storeArr[2])
+        {
+            app.main.foodfour.setText("Sold");
+        }
 		
 		
 		
 		//First fish option in the store
-		var fish2 = app.main.game.add.image(50, 350, 'fish2');
+		app.main.storePics[3] = app.main.game.add.image(50, 350, 'fish2');
 		
 		app.main.fishtwo = app.main.game.add.text(100, 500, "Cost: $50");
    		app.main.fishtwo.anchor.set(.5);
@@ -310,10 +318,13 @@ function storeOpen(item) {
 		app.main.fishtwo.events.onInputOver.add(over, this);
 		app.main.fishtwo.events.onInputOut.add(out, this);
 		app.main.fishtwo.events.onInputDown.add(fishTwo, this);
+		if(app.main.storeArr[3])
+        {
+            app.main.fishtwo.setText("Sold");
+        }
 		
 		
-		
-		var fish3 = app.main.game.add.image(250, 350, 'fish3');
+		app.main.storePics[4] = app.main.game.add.image(250, 350, 'fish3');
 			
 		app.main.fishthree = app.main.game.add.text(300, 500, "Cost: $200");
    		app.main.fishthree.anchor.set(.5);
@@ -325,9 +336,12 @@ function storeOpen(item) {
 		app.main.fishthree.events.onInputOver.add(over, this);
 		app.main.fishthree.events.onInputOut.add(out, this);
 		app.main.fishthree.events.onInputDown.add(fishThree, this);
+		if(app.main.storeArr[4])
+        {
+            app.main.fishthree.setText("Sold");
+        }
 		
-		
-		var fish4 = app.main.game.add.image(450, 350, 'fish4');
+		app.main.storePics[5] = app.main.game.add.image(450, 350, 'fish4');
 		app.main.fishfour = app.main.game.add.text(500, 500, "Cost: $1000");
    		app.main.fishfour.anchor.set(.5);
         app.main.fishfour.font = "Gloria Hallelujah";
@@ -338,7 +352,10 @@ function storeOpen(item) {
 		app.main.fishfour.events.onInputOver.add(over, this);
 		app.main.fishfour.events.onInputOut.add(out, this);
 		app.main.fishfour.events.onInputDown.add(fishFour, this);
-		
+		if(app.main.storeArr[5])
+        {
+            app.main.fishfour.setText("Sold");
+        }
 		}
 		app.main.clickedStore = true;
  }
@@ -354,9 +371,13 @@ function storeClose(item) {
    	app.main.fishtwo.destroy();
    	app.main.fishthree.destroy();
    	app.main.fishfour.destroy();
+       
+    for(var i=0; i<app.main.storePics.length; i++)
+    {
+        app.main.storePics[i].destroy();
+    }
    	   	
    	app.main.overlay = false;
-    app.main.game.time.events.add(Phaser.Timer.SECOND * 4, app.main.fishArr[0].takeAPoop, this);
    	app.main.clickedStore = false;
     app.main.isMouseDown = true;
 }
@@ -403,39 +424,79 @@ function exitTut(item)
     app.main.isMouseDown = true;
 	app.main.tutback.destroy();
 	app.main.closeTut.destroy();
-	
 	app.main.overlay = false;
-	
 }
 
 function foodTwo(item){
-	
+    if(app.main.money >= 10)
+    {
+        app.main.foodType = "food2";
+        app.main.foodtwo.setText("Sold");
+        app.main.storeArr[0] = true;
+        app.main.money -= 10;
+    }
 }
 
 
 function foodThree(item){
-	
+    if(app.main.money >= 50)
+    {
+	   app.main.foodType = "food3";
+       app.main.foodthree.setText("Sold");
+       app.main.storeArr[1] = true;
+       app.main.money -= 50;
+    }
 }
 
 
 function foodFour(item){
-	
+    if(app.main.money >= 200)
+    {
+        app.main.foodType = "food4";
+        app.main.foodfour.setText("Sold");
+        app.main.store[2] = true;
+        app.main.money -= 200;
+    }
 }
 
 
 
 function fishTwo(item){
-	
-	}
-	
-	
-
-function fishThree(item){
-	
+    if(app.main.money >= 50)
+    {
+        app.main.fishArr[0].loadTexture("fish2");
+        app.main.fishArr[0].animations.add("swim2");
+        app.main.fishArr[0].play("swim2", 10, true);
+        app.main.fishArr[0].anchor.setTo(.5, .5);
+        app.main.fishtwo.setText("Sold");
+        app.main.storeArr[3] = true;
+        app.main.money -= 50;
+    }
 	
 }
 
+function fishThree(item){
+    if(app.main.money >= 200)
+    {
+        app.main.fishArr[0].loadTexture("fish3");
+        app.main.fishArr[0].animations.add("swim3");
+        app.main.fishArr[0].play("swim3", 10, true);
+        app.main.fishArr[0].anchor.setTo(.5, .5);
+        app.main.fishthree.setText("Sold");
+        app.main.storeArr[4] = true;
+        app.main.money -= 200;
+    }
+}
 
 function fishFour(item){
-	
+    if(app.main.money >= 1000)
+    {
+        app.main.fishArr[0].loadTexture("fish4");
+        app.main.fishArr[0].animations.add("swim4");
+        app.main.fishArr[0].play("swim4", 10, true);
+        app.main.fishArr[0].anchor.setTo(.5, .5);
+        app.main.fishfour.setText("Sold");
+        app.main.storeArr[5] = true;
+        app.main.money -= 1000;
+    }
 }
