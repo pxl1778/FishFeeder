@@ -21,6 +21,7 @@ app.main = {
 	bubbleParticles: undefined,
 	size : 1, 
 	money: 0,
+	soundEffectsOn: true,
 	text: undefined,
 
 	WebFontConfig : {
@@ -39,8 +40,8 @@ app.main = {
 	//Adds necessary values to the poops
 	initializePoop : function(thisPoop, index)
 	{
-		thisPoop.width = 8;
-		thisPoop.height = 12;
+		thisPoop.width = 15;
+		thisPoop.height = thisPoop.width * 1.5;
 		thisPoop.arrIndex = index;
 		
 		//Physics
@@ -89,8 +90,8 @@ app.main = {
 		thisFish.seekForce = new Phaser.Point(0, 0); //initializing seek force
 		thisFish.seekTarget = new Phaser.Point(thisFish.x, thisFish.y); //initializing default seek target
 		thisFish.maxForce = 80; //max force applied
-		thisFish.width = 10;
-		thisFish.height = 10;
+		thisFish.width = 20;
+		thisFish.height = thisFish.width * (12/7);
 		
 		//Displays the fish
 		thisFish.display = function(){
@@ -105,6 +106,7 @@ app.main = {
 			thisFish.seek();
 			thisFish.applyForce();
 			thisFish.body.velocity = Phaser.Point.add(thisFish.body.velocity, thisFish.body.acceleration);
+			thisFish.angle = (Math.atan2(thisFish.body.velocity.y, thisFish.body.velocity.x)*180/Math.PI) + 90;
 			if(Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 10 && app.main.food.length > 0)
 			{
 				//particle
@@ -112,6 +114,7 @@ app.main = {
 				app.main.bubbleParticles.y = app.main.food[0].y;
 				app.main.bubbleParticles.start(true, 5000, null, 7);
 				//removing food
+				app.main.food[0].destroy();
 				app.main.food.splice(0, 1);
 				//fish grows
 				app.main.fishArr[0].width++;
@@ -137,7 +140,7 @@ app.main = {
 			{
 				thisFish.seekTarget = app.main.food[0].position;
 			}
-			else if (Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 15)
+			else if (Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < 25)
 			{
 				thisFish.seekTarget = new Phaser.Point(Math.floor(Math.random() * 800), Math.floor(Math.random() * 600));
 			}
@@ -157,8 +160,8 @@ app.main = {
 	initializeFood : function(thisFood, _foodType)
 	{
 		thisFood.foodType = _foodType;
-		thisFood.width = 10;
-		thisFood.height = 10;
+		thisFood.width = 15;
+		thisFood.height = 15;
 		
 		//setting physics for the food
 		app.main.game.physics.arcade.enable(thisFood);
