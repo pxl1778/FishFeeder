@@ -34,8 +34,9 @@ app.main = {
 	storeArr: [false, false, false, false, false, false],
 	multiplier: 1,
 	zen : false,
-
+	keySpace: false,
 	clickedStore: false,
+	pausetext: undefined,
 
 	WebFontConfig : {
 
@@ -303,6 +304,7 @@ function init(){
 	
     app.main.game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 	
+	//sets game states
 	app.main.game.state.add("boot", bootState);
     app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);

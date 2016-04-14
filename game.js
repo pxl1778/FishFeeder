@@ -27,6 +27,7 @@ var gameState = {
     bubbleParticles: undefined,
 	
 	create: function(){
+		app.main.zen = false;
         app.main.game.add.sprite(0, 0, "tankbackground");
 		app.main.graphics = app.main.game.add.graphics(0, 0);
 		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //Tracking the mouse position
@@ -56,6 +57,12 @@ var gameState = {
         app.main.text.font = "Gloria Hallelujah";
         app.main.text.fontSize = 30;
         app.main.text.fill = '#fff';
+         
+        //Keyboard imports
+        //app.main.keySpace = app.main.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		//app.main.keySpace.onDown.add(setPause, this);
+		 
+		//app.main.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.SPACEBAR);
                
 		
         //Setting up physics for game objects
@@ -130,6 +137,7 @@ var gameState = {
             if(app.main.fishArr.length < 1)
             {
                 app.main.game.state.start("flushed");
+                app.main.game.cache.removeSound('back');
             }
         }
 	},
@@ -219,6 +227,7 @@ var gameState = {
         //Called every frame, checks if the player is clicking to leave food.
         click: function(){
 	        if(app.main.overlay == false){
+		    //if(app.main.keySpace ==false){
             if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
             {
                 app.main.isMouseDown = true;
@@ -237,8 +246,8 @@ var gameState = {
                 app.main.isMouseDown = false;
             }
 		}
+	//}
 	}
-	
 }
 
 function storeOpen(item) {
@@ -630,3 +639,22 @@ function fishFour(item){
         app.main.money -= 10000;
     }
 }
+/*
+function setPause()
+{
+	if(app.main.keySpace == false){
+	app.main.keySpace = true;
+	app.main.pausetext = app.main.game.add.text(300,300, "PAUSE");
+    app.main.pausetext.anchor.set(.5);
+    app.main.pausetext.font = "Gloria Hallelujah";
+    app.main.pausetext.fontSize = 100;
+    app.main.pausetext.fill = '#fff';
+	console.log("keySpace: " + app.main.keySpace);
+	}
+	else
+	{
+	app.main.keySpace = false;
+	app.main.pausetext.destroy();
+	}
+	console.log("keySpace: " + app.main.keySpace);
+}*/

@@ -24,7 +24,7 @@ var flushedState = {
 			tryagain.font = "Gloria Hallelujah";
 			tryagain.fontSize = 40;
 			tryagain.fill = '#fff';
-
+		
 		home.inputEnabled = true;
 		home.events.onInputOver.add(over, this);
 		home.events.onInputOut.add(out, this);
@@ -51,6 +51,7 @@ function out(item) {
 
 }
 
+//Sets the screen back to the main screen
 function reboot() {
     app.main.game.state.start("boot");
     app.main.zen = false;
@@ -81,6 +82,7 @@ function reboot() {
 
 function restart()
 {
+	//Restarts the whole game
 	app.main.game.state.start("game");
 	app.main.zen = false;
 	app.main.fishArr = [];
@@ -107,3 +109,5 @@ function restart()
 	app.main.storeArr = [false, false, false, false, false, false];
 	app.main.multiplier = 1;
 }
+
+

@@ -13,7 +13,7 @@ var zenState = {
         app.main.game.load.image("tutbackground", "images/tutorial.png");
 
         app.main.game.load.image("store", "images/storeicon.png", 100,100);
-        app.main.game.load.image("tutorialbutton", "images/tutorialicon.png", 100,100);
+        //app.main.game.load.image("tutorialbutton", "images/tutorialicon.png", 100,100);
         app.main.game.load.image("food1", "images/food1.png", 100,100);
         app.main.game.load.image("food2", "images/food2.png",100,100);
         app.main.game.load.image("food3", "images/food3.png");
@@ -32,7 +32,7 @@ var zenState = {
 		app.main.graphics = app.main.game.add.graphics(0, 0);
 		app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //Tracking the mouse position
         var store = app.main.game.add.sprite(690, 10, "store");
-        var tutorialbutton = app.main.game.add.sprite(690, 120,"tutorialbutton");
+        //var tutorialbutton = app.main.game.add.sprite(690, 120,"tutorialbutton");
         
         //particles
         app.main.bubbleParticles = app.main.game.add.emitter(0, 0, 70);
@@ -80,8 +80,8 @@ var zenState = {
         store.events.onInputDown.add(storeOpen, this);
        
 		//instructions
-		tutorialbutton.inputEnabled = true;
-        tutorialbutton.events.onInputDown.add(tutorialScreen, this);
+		//tutorialbutton.inputEnabled = true;
+        //tutorialbutton.events.onInputDown.add(tutorialScreen, this);
         
         //exit button
         app.main.xClose = app.main.game.add.text(50, 20, "<-");
@@ -109,7 +109,7 @@ var zenState = {
             this.checkFoodCollision(); //Checks if the fish has collided with the food
             this.click(); //Checks for clicking to feed the fish
             
-            app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //recording the moues pos
+            app.main.prevMouse = new Phaser.Point(app.main.game.input.x, app.main.game.input.y); //recording the mouse pos
         }
 	},
 	

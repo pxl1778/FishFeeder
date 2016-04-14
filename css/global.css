@@ -1,23 +1,23 @@
+
+
 body {
-    font-family: 'Gloria+Hallelujah';
+    font-family: 'Gloria Hallelujah';
     font-size: 32px;
-
     background-color: #455A64;
+    margin: 0;
+    padding: 0;
 }
 
-h1{
-    font-family: 'Gloria+Hallelujah';
-    font-size: 32px;
-    margin: auto;
-    margin-left: 50%;
-}
-canvas {    margin: auto;   border: 2px #607D8B solid; }
+canvas {    margin: auto;   border: 2px #607D8B solid;}
 
-.slider { float: left; margin: auto; margin-right: 10px;}
+#controls {	margin-left: auto; margin-right: auto; bottom: 25px; position: absolute; width: 100%; height: 40px; text-align: center;}
+.slider { height: auto; width:300px; bottom: 0px; position: absolute; display: inline;  left:0px; margin-left: 25%; }
+.checkbox{	position: absolute; height: auto; width: 200px; display: inline; padding-left: 10px;}
 
 #checkbox{
     float:left;
     margin: auto;
+    
 }
 
 #controls{
@@ -26,3 +26,13 @@ canvas {    margin: auto;   border: 2px #607D8B solid; }
     font-size: 20px;
 }
 
+footer {
+	position: absolute;
+	color: white;
+	height: auto;
+	width: 100%;
+	margin: 10px auto 0 auto;
+	text-align: center;
+	bottom: 0px;
+	font-size: 15px;
+}
