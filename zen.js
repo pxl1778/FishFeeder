@@ -84,7 +84,7 @@ var zenState = {
         tutorialbutton.events.onInputDown.add(tutorialScreen, this);
         
         //exit button
-        app.main.xClose = app.main.game.add.text(50, 50, "<-");
+        app.main.xClose = app.main.game.add.text(50, 20, "<-");
    		app.main.xClose.anchor.set(.5);
         app.main.xClose.font = "Gloria Hallelujah";
         app.main.xClose.fontSize = 50;

@@ -270,7 +270,14 @@ function storeOpen(item) {
 		//Fist food information in the store
 		app.main.storePics[0] = app.main.game.add.image(50, 100, 'food2');
 		
-		app.main.foodtwo = app.main.game.add.text(100, 250, "Cost: $10");
+        if(app.main.zen)
+        {
+            app.main.foodtwo = app.main.game.add.text(100, 250, "Free");
+        }
+        else
+        {
+		    app.main.foodtwo = app.main.game.add.text(100, 250, "Cost: $10\nx2");            
+        }
    		app.main.foodtwo.anchor.set(.5);
         app.main.foodtwo.font = "Gloria Hallelujah";
         app.main.foodtwo.fontSize = 20;
@@ -287,8 +294,14 @@ function storeOpen(item) {
 
 		//second food option in the store
 		app.main.storePics[1] = app.main.game.add.image(250, 100, 'food3');
-		
-		app.main.foodthree = app.main.game.add.text(300, 250, "Cost: $100");
+		if(app.main.zen)
+        {
+		  app.main.foodthree = app.main.game.add.text(300, 250, "Free");
+        }
+        else
+        {
+		     app.main.foodthree = app.main.game.add.text(300, 250, "Cost: $100\nx3");
+        }
    		app.main.foodthree.anchor.set(.5);
         app.main.foodthree.font = "Gloria Hallelujah";
         app.main.foodthree.fontSize = 20;
@@ -306,7 +319,13 @@ function storeOpen(item) {
 		//fourth food option in the store
 		app.main.storePics[2] = app.main.game.add.image(450, 100, 'food4');
 		
-		app.main.foodfour = app.main.game.add.text(500, 250, "Cost: $1000");
+        if(app.main.zen)
+        {
+		  app.main.foodfour = app.main.game.add.text(500, 250, "Free");
+        }
+		else{
+            app.main.foodfour = app.main.game.add.text(500, 250, "Cost: $1000\nx4");
+        }
    		app.main.foodfour.anchor.set(.5);
         app.main.foodfour.font = "Gloria Hallelujah";
         app.main.foodfour.fontSize = 20;
@@ -326,7 +345,14 @@ function storeOpen(item) {
 		//First fish option in the store
 		app.main.storePics[3] = app.main.game.add.image(50, 350, 'fish2');
 		
-		app.main.fishtwo = app.main.game.add.text(100, 500, "Cost: $50");
+        if(app.main.zen)
+        {
+            app.main.fishtwo = app.main.game.add.text(100, 500, "Free");
+        }
+		else
+        {
+            app.main.fishtwo = app.main.game.add.text(100, 500, "Cost: $50\n+10");
+        }
    		app.main.fishtwo.anchor.set(.5);
         app.main.fishtwo.font = "Gloria Hallelujah";
         app.main.fishtwo.fontSize = 20;
@@ -341,10 +367,15 @@ function storeOpen(item) {
             app.main.fishtwo.setText("Sold");
         }
 		
-		
 		app.main.storePics[4] = app.main.game.add.image(250, 350, 'fish3');
 			
-		app.main.fishthree = app.main.game.add.text(300, 500, "Cost: $500");
+		if(app.main.zen)
+        {
+		  app.main.fishthree = app.main.game.add.text(300, 500, "Free");
+        }
+        else{
+		   app.main.fishthree = app.main.game.add.text(300, 500, "Cost: $500\n+20");
+        }
    		app.main.fishthree.anchor.set(.5);
         app.main.fishthree.font = "Gloria Hallelujah";
         app.main.fishthree.fontSize = 20;
@@ -358,9 +389,18 @@ function storeOpen(item) {
         {
             app.main.fishthree.setText("Sold");
         }
-		
+        
 		app.main.storePics[5] = app.main.game.add.image(450, 350, 'fish4');
-		app.main.fishfour = app.main.game.add.text(500, 500, "Cost: $10000");
+        
+        if(app.main.zen)
+        {
+           	app.main.fishfour = app.main.game.add.text(500, 500, "Free"); 
+        }
+        else
+        {
+		      app.main.fishfour = app.main.game.add.text(500, 500, "Cost: $10000\n+100");            
+        }
+
    		app.main.fishfour.anchor.set(.5);
         app.main.fishfour.font = "Gloria Hallelujah";
         app.main.fishfour.fontSize = 20;
