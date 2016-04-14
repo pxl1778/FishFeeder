@@ -659,8 +659,7 @@ function setPause()
 	app.main.pausetext.destroy();
 	}
 	console.log("keySpace: " + app.main.keySpace);
-}*/
-=======
+}
 
 function setPause()
 {
