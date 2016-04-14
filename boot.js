@@ -23,7 +23,7 @@ var bootState = {
         loadingTitle.fontSize = 40;
         loadingTitle.fill = '#1565C0';
        
-    var playGame = app.main.game.add.text(400, 350, "Start Parenting");
+    var playGame = app.main.game.add.text(400, 300, "Start Parenting");
 		playGame.anchor.set(.5);
         playGame.font = 'Gloria Hallelujah';
         playGame.fontSize = 30;
@@ -34,6 +34,12 @@ var bootState = {
         tutorialScreen.font = 'Gloria Hallelujah';
         tutorialScreen.fontSize = 30;
 		tutorialScreen.fill = '#fff';
+		
+	var zenMode = app.main.game.add.text(400, 375, "Zen");
+		zenMode.anchor.set(.5);
+		zenMode.font = 'Gloria Hallelujah';
+		zenMode.fontSize = 30;
+		zenMode.fill = '#fff';
 		
 	var devs = app.main.game.add.text(400, 550, "Peter Lockhart & Sara Artese");
 		devs.anchor.set(.5);
@@ -53,6 +59,12 @@ var bootState = {
 		tutorialScreen.events.onInputOver.add(over, this);
 		tutorialScreen.events.onInputOut.add(out, this);
 		tutorialScreen.events.onInputDown.add(instructions, this);
+		
+		//Zen hover and change game state
+		zenMode.inputEnabled = true;
+		zenMode.events.onInputOver.add(over, this);
+		zenMode.events.onInputOut.add(out, this);
+		zenMode.events.onInputDown.add(zen, this);
 	},
 	
 	WebFontConfig : {
@@ -96,5 +108,8 @@ function instructions(item) {
 
 }
 
+function zen(item){
+	item = app.main.game.state.start("zen");
+}
  
 

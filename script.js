@@ -12,6 +12,8 @@ app.main = {
 	puddles: [],
 	food: [],
 	poop: [],
+	storePics: [],
+	deadFish: [false, false, false, false],
 	prevMouse: undefined,
 	music: undefined,
 	foodEat: undefined, 
@@ -19,7 +21,6 @@ app.main = {
 	foodGroup: undefined,
 	fishGroup: undefined,
 	bubbleParticles: undefined,
-	size : 1, 
 	money: 0,
 	soundEffectsOn: true,
 	text: undefined,
@@ -31,7 +32,8 @@ app.main = {
 	closeTut: undefined,
 	tutback: undefined,
 	storeArr: [false, false, false, false, false, false],
-	storePics: [],
+	multiplier: 1,
+	zen : false,
 
 	clickedStore: false,
 
@@ -51,11 +53,19 @@ app.main = {
 
 	
 	//Adds necessary values to the poops
-	initializePoop : function(thisPoop, index)
+	initializePoop : function(thisPoop, index, fIndex)
 	{
 		thisPoop.width = 15;
 		thisPoop.height = thisPoop.width * 1.5;
 		thisPoop.arrIndex = index;
+		thisPoop.fishIndex = fIndex;
+		if(app.main.deadFish[fIndex])
+		{
+			thisPoop.fishIndex = 0;
+			app.main.fishArr[0].poopArr.push(thisPoop);
+			thisPoop.arrIndex = app.main.fishArr[0].poopArr.length-1;
+			app.main.deadFish[fIndex] = false;
+		}
 		
 		//Physics
 		app.main.game.physics.arcade.enable(thisPoop);
@@ -66,31 +76,21 @@ app.main = {
 		
 		//Gets rid of the poop and rewards the player
 		thisPoop.cleanPoop = function(){
-			if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false)
+			if(app.main.game.input.activePointer.isDown && app.main.isMouseDown == false && !app.main.deadFish[thisPoop.fishIndex])
 			{
-				app.main.poop[thisPoop.arrIndex].destroy();
-				app.main.poop.splice(thisPoop.arrIndex, 1);
-				for(var i=thisPoop.arrIndex; i<app.main.poop.length; i++)
+				thisPoop.destroy();
+				app.main.fishArr[thisPoop.fishIndex].poopArr.splice(thisPoop.arrIndex, 1);
+				for(var i=thisPoop.arrIndex; i<app.main.fishArr[thisPoop.fishIndex].poopArr.length; i++)
 				{
-					app.main.poop[i].arrIndex --;
+					app.main.fishArr[thisPoop.fishIndex].poopArr[i].arrIndex --;
 				}
 				//balancing how much money depending on food
-				if(app.main.foodType == "food1")
-				{
-					app.main.money ++;
-				}
-				if(app.main.foodType == "food2")
-				{
-					app.main.money += 5;
-				}
-				if(app.main.foodType == "food3")
-				{
-					app.main.money += 20;
-				}
-				if(app.main.foodType == "food4")
-				{
-					app.main.money += 100;
-				}
+				app.main.money += app.main.fishArr[thisPoop.fishIndex].value * app.main.multiplier;
+			}
+			if(app.main.deadFish[thisPoop.fishIndex])
+			{
+				app.main.deadFish[thisPoop.fishIndex] = false;
+				thisPoop.destroy();
 			}
 			app.main.isMouseDown = true;
 			
@@ -106,12 +106,10 @@ app.main = {
 			app.main.graphics.lineStyle(0x000000, 0);
 			app.main.graphics.drawRect(thisPoop.x, thisPoop.y, thisPoop.width, thisPoop.height);
 		}
-		
-		
 	},
 	
 	//Adds necesary values to the fish
-	initializeFish : function(thisFish)
+	initializeFish : function(thisFish, v)
 	{
 		app.main.game.physics.arcade.enable(thisFish);//adding the body component
 		thisFish.body.collideWorldsBounds = true;
@@ -121,6 +119,11 @@ app.main = {
 		thisFish.maxForce = 80; //max force applied
 		thisFish.width = 20;
 		thisFish.height = thisFish.width * (12/7);
+		thisFish.arrIndex = app.main.fishArr.length - 1;
+		thisFish.poopArr = [];
+		thisFish.value = v;
+		thisFish.size = Math.floor(thisFish.width) /10;
+		thisFish.canPoop = true;
 		
 		//Displays the fish
 		thisFish.display = function(){
@@ -136,6 +139,7 @@ app.main = {
 			thisFish.applyForce();
 			thisFish.body.velocity = Phaser.Point.add(thisFish.body.velocity, thisFish.body.acceleration);
 			thisFish.angle = (Math.atan2(thisFish.body.velocity.y, thisFish.body.velocity.x)*180/Math.PI) + 90;
+			thisFish.size = Math.floor(thisFish.width) / 10;
 			if(Math.abs(app.main.game.physics.arcade.distanceBetween(thisFish.position, thisFish.seekTarget)) < thisFish.height && app.main.food.length > 0)
 			{
 				//particle
@@ -146,12 +150,67 @@ app.main = {
 				app.main.food[0].destroy();
 				app.main.food.splice(0, 1);
 				//fish grows
-				app.main.fishArr[0].width++;
-				app.main.fishArr[0].body.width++;
-				app.main.fishArr[0].height = app.main.fishArr[0].width * (12/7);
-				app.main.fishArr[0].body.height++;
+				app.main.fishArr[thisFish.arrIndex].width++;
+				app.main.fishArr[thisFish.arrIndex].body.width++;
+				app.main.fishArr[thisFish.arrIndex].height = app.main.fishArr[thisFish.arrIndex].width * (12/7);
+				app.main.fishArr[thisFish.arrIndex].body.height++;
 				app.main.foodEat = app.main.game.sound.play('foodEat');
 				app.main.foodEat.volume -= 0.3;
+			}
+			//pooping
+			if(thisFish.canPoop)
+			{
+				app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
+				thisFish.canPoop = false;
+			}
+			if(app.main.zen)
+				{
+					if(thisFish.size < 2.0)
+					{
+						thisFish.width = 20;
+					}
+					if(thisFish.size > 6.0)
+					{
+						thisFish.width = 60;
+					}
+				}
+			//death
+			if(thisFish.size < 1.0 || thisFish.size > 10.0)
+			{
+				if(!app.main.zen)
+				{
+					if(thisFish.value == 10)
+					{
+						app.main.fishtwo.setText("$50");
+						app.main.storeArr[3] = false;
+					}
+					if(thisFish.value == 20)
+					{
+						app.main.fishthree.setText("$500");
+						app.main.storeArr[4] = false;
+					}
+					if(thisFish.value == 100)
+					{
+						app.main.fishfour.setText("$1000");
+						app.main.storeArr[5] = false;
+					}
+					app.main.deadFish[thisFish.arrIndex] = true;
+					for(var i=0; i<thisFish.poopArr.length; i++)
+					{
+						thisFish.poopArr[i].destroy();
+					}
+					app.main.fishArr[thisFish.arrIndex].destroy();
+					app.main.fishArr.splice(thisFish.arrIndex, 1);
+					for(var i=thisFish.arrIndex; i<app.main.fishArr.length; i++)
+					{
+						app.main.fishArr[i].arrIndex -= 1;
+						for(var j=0; j<app.main.fishArr[i].poopArr.length; j++)
+						{
+							app.main.fishArr[i].poopArr[j].fishIndex -= 1;
+						}
+					}
+				}
+				
 			}
 		}
 		
@@ -167,16 +226,20 @@ app.main = {
 		
 		//The fish takes a poop every 4 seconds where it currently is
 		thisFish.takeAPoop = function(){
-			if(app.main.overlay ==false)
+			if(!app.main.zen)
 			{
-				app.main.poop.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
-				app.main.initializePoop(app.main.poop[app.main.poop.length-1], app.main.poop.length-1);
+				if(app.main.overlay ==false)
+				{
+					thisFish.poopArr.push(app.main.poopGroup.create(thisFish.x, thisFish.y, "poop"));
+					app.main.initializePoop(thisFish.poopArr[thisFish.poopArr.length-1], thisFish.poopArr.length-1, thisFish.arrIndex);
+				}
+				thisFish.canPoop = true;
 			}
-			app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
 		}
-		//starting the pooping
-		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.takeAPoop, this);
+		
+		//starting the shrinking
 		app.main.game.time.events.add(Phaser.Timer.SECOND * 4, thisFish.shrink, this);
+		
 		//adds forces to move towards the seekTarget
 		thisFish.seek = function(){
 			if(app.main.food.length > 0 && !app.main.overlay) //making sure there isn't an undefined target
@@ -191,11 +254,11 @@ app.main = {
 			temp.clamp(-thisFish.maxForce, thisFish.maxForce);
 			thisFish.seekForce = Phaser.Point.subtract(temp, thisFish.body.velocity);
 		
-		
-		//applies forces to the fish
-		thisFish.applyForce = function(){
-			thisFish.body.acceleration = Phaser.Point.add(thisFish.body.acceleration, thisFish.seekForce);
-		}
+			//applies forces to the fish
+			thisFish.applyForce = function()
+			{
+				thisFish.body.acceleration = Phaser.Point.add(thisFish.body.acceleration, thisFish.seekForce);
+			}
 		}	
 	},
 	
@@ -244,5 +307,6 @@ function init(){
     app.main.game.state.add("game", gameState);
     app.main.game.state.add("tutorial", tutorialState);
     app.main.game.state.add("flushed", flushedState);
+	app.main.game.state.add("zen", zenState);
     app.main.game.state.start("boot");
 }

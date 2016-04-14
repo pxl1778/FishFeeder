@@ -52,20 +52,20 @@ function out(item) {
 }
 
 function reboot() {
-   
-     app.main.game.state.start("boot");
+    app.main.game.state.start("boot");
+    app.main.zen = false;
 	app.main.fishArr = [];
 	app.main.circles = [];
 	app.main.puddles = [];
 	app.main.food = [];
 	app.main.poop = [];
+	app.main.deadFish = [false, false, false, false];
 	app.main.music = undefined;
 	app.main.foodEat = undefined;
 	app.main.foodPlop = undefined;
 	app.main.foodGroup = undefined;
 	app.main.fishGroup = undefined;
 	app.main.bubbleParticles = undefined;
-	app.main.size = 1;
 	app.main.money = 0;
 	app.main.text = undefined;
 	app.main.overlay = false;
@@ -76,23 +76,25 @@ function reboot() {
 	app.main.closeTut = undefined;
 	app.main.tutback = undefined;
 	app.main.storeArr = [false, false, false, false, false, false];
+	app.main.multiplier = 1;
 }
 
 function restart()
 {
 	app.main.game.state.start("game");
+	app.main.zen = false;
 	app.main.fishArr = [];
 	app.main.circles = [];
 	app.main.puddles = [];
 	app.main.food = [];
 	app.main.poop = [];
+	app.main.deadFish = [false, false, false, false];
 	app.main.music = undefined;
 	app.main.foodEat = undefined;
 	app.main.foodPlop = undefined;
 	app.main.foodGroup = undefined;
 	app.main.fishGroup = undefined;
 	app.main.bubbleParticles = undefined;
-	app.main.size = 1;
 	app.main.money = 0;
 	app.main.text = undefined;
 	app.main.overlay = false;
@@ -103,4 +105,5 @@ function restart()
 	app.main.closeTut = undefined;
 	app.main.tutback = undefined;
 	app.main.storeArr = [false, false, false, false, false, false];
+	app.main.multiplier = 1;
 }
