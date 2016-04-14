@@ -27,19 +27,19 @@ var tutorialState = {
 	}
 }
 function over(item) {
-
+	//changes color over hover
     item.fill = "#2196F3";
 
 }
 
 function out(item) {
-
+	//changes color on out
     item.fill = "#ffffff";
 
 }
 
 function backStart(item) {
-   
+   	//on click sets game back to boot
      item =  app.main.game.state.start("boot");
 
 }

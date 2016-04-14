@@ -10,7 +10,7 @@ var bootState = {
 	
 	create: function(){
 		app.main.game.physics.startSystem(Phaser.Physics.Arcade);
-		
+		app.main.game.cache.removeSound('back');
 				
 		//app.main.game.stage.backgroundColor = "0xAADDFF";
 		
@@ -35,7 +35,7 @@ var bootState = {
         tutorialScreen.fontSize = 30;
 		tutorialScreen.fill = '#fff';
 		
-	var zenMode = app.main.game.add.text(400, 375, "Zen");
+	var zenMode = app.main.game.add.text(400, 375, "Zen Mode");
 		zenMode.anchor.set(.5);
 		zenMode.font = 'Gloria Hallelujah';
 		zenMode.fontSize = 30;
