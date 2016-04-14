@@ -78,10 +78,6 @@ var zenState = {
         //store
         store.inputEnabled = true;
         store.events.onInputDown.add(storeOpen, this);
-       
-		//instructions
-		tutorialbutton.inputEnabled = true;
-        tutorialbutton.events.onInputDown.add(tutorialScreen, this);
         
         //exit button
         app.main.xClose = app.main.game.add.text(50, 20, "<-");

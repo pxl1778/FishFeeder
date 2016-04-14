@@ -59,10 +59,10 @@ var gameState = {
         app.main.text.fill = '#fff';
          
         //Keyboard imports
-        //app.main.keySpace = app.main.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		//app.main.keySpace.onDown.add(setPause, this);
+        app.main.keySpace = app.main.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		app.main.keySpace.onDown.add(setPause, this);
 		 
-		//app.main.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.SPACEBAR);
+		app.main.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.SPACEBAR);
                
 		
         //Setting up physics for game objects
@@ -591,14 +591,14 @@ function fishTwo(item){
 function fishThree(item){
     if(app.main.zen)
     {
-        if(app.main.money >= 0 && !app.main.storeArr[4])
+        if(app.main.money >= 50 && !app.main.storeArr[4])
         {
             app.main.fishArr.push(app.main.fishGroup.create(0, 0, "fish3"));
             app.main.fishArr[app.main.fishArr.length-1].animations.add("swim3");
             app.main.fishArr[app.main.fishArr.length-1].play("swim3", 10, true);
             app.main.fishArr[app.main.fishArr.length-1].anchor.setTo(.5, .5);
             app.main.initializeFish(app.main.fishArr[app.main.fishArr.length-1], 20);
-            app.main.money -= 0;
+            app.main.money -= 50;
         }
     }
     else if(app.main.money >= 500 && !app.main.storeArr[4])
@@ -639,22 +639,23 @@ function fishFour(item){
         app.main.money -= 10000;
     }
 }
-/*
+
 function setPause()
 {
 	if(app.main.keySpace == false){
-	app.main.keySpace = true;
-	app.main.pausetext = app.main.game.add.text(300,300, "PAUSE");
-    app.main.pausetext.anchor.set(.5);
-    app.main.pausetext.font = "Gloria Hallelujah";
-    app.main.pausetext.fontSize = 100;
-    app.main.pausetext.fill = '#fff';
-	console.log("keySpace: " + app.main.keySpace);
+        app.main.overlay = true;
+        app.main.keySpace = true;
+        app.main.pausetext = app.main.game.add.text(300,300, "PAUSE");
+        app.main.pausetext.anchor.set(.5);
+        app.main.pausetext.font = "Gloria Hallelujah";
+        app.main.pausetext.fontSize = 100;
+        app.main.pausetext.fill = '#fff';
+        console.log("keySpace: " + app.main.keySpace);
 	}
-	else
+	else if (app.main.keySpace)
 	{
-	app.main.keySpace = false;
-	app.main.pausetext.destroy();
+        app.main.keySpace = false;
+        app.main.overlay = false;
+        app.main.pausetext.destroy();
 	}
-	console.log("keySpace: " + app.main.keySpace);
-}*/
+}
